@@ -69,7 +69,12 @@ for (const viewport of [
       // Browsers may round composited transforms differently by a fraction of a
       // device pixel. A quarter-pixel limit still catches visible reverse drift.
       numbers(reverse.matrix).forEach((value, j) => expect(Math.abs(value - numbers(forward[i].matrix)[j])).toBeLessThan(.25));
-      expect(reverse.ink).toBe(forward[i].ink);
+      const forwardInk = numbers(forward[i].ink);
+      numbers(reverse.ink).forEach((value, j) => {
+        // Chromium can round an interpolated 8-bit channel one level either way.
+        const tolerance = j === 3 ? .01 : 1;
+        expect(Math.abs(value - forwardInk[j])).toBeLessThanOrEqual(tolerance);
+      });
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);
