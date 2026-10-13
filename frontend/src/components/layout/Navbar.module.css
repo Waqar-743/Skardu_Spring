@@ -1,0 +1,550 @@
+/* ===================================================
+   NAVBAR — Glassmorphic Premium Navigation
+   =================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-slow);
+  padding: 0 var(--space-xl);
+}
+
+.navTransparent {
+  background: transparent;
+}
+
+.navScrolled {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(10, 46, 92, 0.06);
+  box-shadow: var(--shadow-sm);
+}
+
+:global([data-theme='dark']) .navScrolled {
+  background: rgba(10, 12, 18, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.navInner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* -- Logo -- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.logoIcon {
+  width: 42px;
+  height: 42px;
+  background: var(--gradient-cta);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-pure-white);
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(10, 46, 92, 0.25);
+  transition: var(--transition-base);
+}
+
+.logo:hover .logoIcon {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(10, 46, 92, 0.35);
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logoName {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--color-pure-white);
+  transition: var(--transition-base);
+}
+
+.logoTagline {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: var(--transition-base);
+  margin-top: 2px;
+}
+
+.navScrolled .logoName {
+  color: var(--color-deep-blue);
+}
+
+.navScrolled .logoTagline {
+  color: var(--color-navy);
+}
+
+/* -- Nav Links -- */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.navLink {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-pure-white);
+  letter-spacing: 0.5px;
+  position: relative;
+  padding: var(--space-xs) 0;
+  transition: var(--transition-base);
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-crystal-cyan);
+  border-radius: var(--radius-full);
+  transition: var(--transition-base);
+}
+
+.navLink:hover::after,
+.navLinkActive::after {
+  width: 100%;
+}
+
+.navLink:hover {
+  color: var(--color-crystal-cyan);
+}
+
+.navScrolled .navLink {
+  color: var(--color-deep-blue);
+}
+
+.navScrolled .navLink:hover {
+  color: var(--color-royal-blue);
+}
+
+/* -- Cart Button -- */
+.cartBtn {
+  position: relative;
+  font-size: 1.5rem;
+  color: var(--color-pure-white);
+  transition: var(--transition-base);
+  display: flex;
+  align-items: center;
+}
+
+.cartBtn:hover {
+  color: var(--color-crystal-cyan);
+  transform: scale(1.1);
+}
+
+.themeToggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.themeToggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navScrolled .themeToggle {
+  background: rgba(10, 46, 92, 0.05);
+  border-color: rgba(10, 46, 92, 0.1);
+}
+
+:global([data-theme='dark']) .navScrolled .themeToggle {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.toggleIconWrapper {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.toggleIcon {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moonIcon {
+  color: var(--color-pure-white);
+}
+
+.sunIcon {
+  color: #f1c40f;
+}
+
+.navScrolled .moonIcon {
+  color: var(--color-deep-blue);
+}
+
+:global([data-theme='dark']) .navScrolled .moonIcon,
+:global([data-theme='dark']) .moonIcon {
+  color: var(--color-light-cyan);
+}
+
+.navScrolled .cartBtn {
+  color: var(--color-deep-blue);
+}
+
+.navScrolled .cartBtn:hover {
+  color: var(--color-royal-blue);
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #ff4757;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-pure-white);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navTransparent .cartBadge {
+  border-color: transparent;
+}
+
+/* -- CTA Button -- */
+.navCta {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-pure-white);
+  background: var(--gradient-cta);
+  padding: 0.65rem 1.8rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 15px rgba(10, 46, 92, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.navCta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: var(--transition-slow);
+}
+
+.navCta:hover::before {
+  left: 100%;
+}
+
+.navCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(10, 46, 92, 0.4);
+}
+
+/* -- Mobile Toggle -- */
+.mobileToggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: var(--space-sm);
+}
+
+.toggleBar {
+  width: 24px;
+  height: 2px;
+  background: var(--color-pure-white);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+}
+
+.navScrolled .toggleBar {
+  background: var(--color-deep-blue);
+}
+
+.toggleOpen .toggleBar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+  background: var(--color-deep-blue);
+}
+
+.toggleOpen .toggleBar:nth-child(2) {
+  opacity: 0;
+}
+
+.toggleOpen .toggleBar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+  background: var(--color-deep-blue);
+}
+
+/* -- Mobile Menu -- */
+.mobileMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xl);
+  z-index: 999;
+}
+
+.mobileMenu.mobileOpen {
+  display: flex;
+}
+
+.mobileMenu .navLink {
+  font-size: var(--text-2xl);
+  font-family: var(--font-heading);
+  color: var(--color-deep-blue);
+}
+
+.mobileMenu .navCta {
+  font-size: var(--text-lg);
+  padding: 1rem 3rem;
+}
+
+/* -- Home / story variant --
+   Transparent and tinted by --ink, which the story stage animates per chapter.
+   Once the pinned story is behind us (html[data-story='after']) it becomes a
+   dark glass bar so it stays legible over any section. */
+.navStory {
+  --nav-ink: var(--ink, #ffffff);
+  background: transparent;
+}
+
+/* The glass lives on a pseudo-element: backdrop-filter on the nav itself would
+   become the containing block of the fixed-position mobile menu. */
+.navStory::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(3, 6, 18, 0.78);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid rgba(236, 243, 255, 0.08);
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+:global(html[data-story='after']) .navStory {
+  --nav-ink: #ecf3ff;
+}
+
+:global(html[data-story='after']) .navStory::before {
+  opacity: 1;
+}
+
+.navStory .logoName,
+.navStory .logoTagline,
+.navStory .navLink,
+.navStory .cartBtn,
+.navStory .moonIcon,
+.navStory .sunIcon {
+  color: var(--nav-ink);
+}
+
+.navStory .logoName {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.navStory .logoTagline {
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.navStory .logoIcon {
+  background: transparent;
+  border: 1px solid var(--nav-ink);
+  color: var(--nav-ink);
+  box-shadow: none;
+}
+
+.navStory .navLink {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.navStory .navLink::after {
+  height: 1px;
+  background: var(--nav-ink);
+}
+
+.navStory .navLink:hover,
+.navStory .cartBtn:hover {
+  color: var(--nav-ink);
+  opacity: 0.7;
+}
+
+.navStory .themeToggle {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--nav-ink) 35%, transparent);
+}
+
+.navStory .navCta {
+  background: transparent;
+  color: var(--nav-ink);
+  border: 1px solid var(--nav-ink);
+  box-shadow: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.navStory .navCta:hover {
+  background: #17332f;
+  color: #f5f0e4;
+  box-shadow: none;
+}
+
+.navStory .cartBadge {
+  border-color: transparent;
+}
+
+.navStory .toggleBar {
+  background: var(--nav-ink);
+}
+
+/* The mobile menu is a white panel, so it keeps dark text. */
+.navStory .mobileMenu .navLink {
+  color: var(--color-deep-blue);
+  font-size: var(--text-2xl);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.navStory .mobileMenu .navCta {
+  color: var(--color-deep-blue);
+  border-color: var(--color-deep-blue);
+}
+
+.navStory .mobileMenu .navCta:hover {
+  background: #17332f;
+  color: #f5f0e4;
+}
+
+.navStory .toggleOpen .toggleBar {
+  background: var(--color-deep-blue);
+}
+
+/* -- Responsive -- */
+@media (max-width: 1024px) {
+  .navLinks {
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: flex;
+  }
+}
+.navStory { --nav-ink: var(--ink, #17332f); }
+.logoIcon svg { width: 32px; height: 34px; }
+.navStory .logoIcon { border: 0; width: 38px; height: 40px; font-size: 27px; }
+.navStory .logoIcon svg { width: 38px; height: 40px; }
+.navStory .logoName { font-size: 25px; }
+.navStory .logoTagline { font-size: 7px; letter-spacing: .2em; }
+.navStory .navLinks { gap: 32px; }
+.navStory .navCta { border-radius: 0; padding: 11px 22px; font-size: 9px; }
+:global(html[data-story='after']) .navStory::before { background: rgba(25,59,52,.94); }
+.menuIsOpen .logoName, .menuIsOpen .logoTagline, .menuIsOpen .logoIcon { color: #17332f; }
+
+/* One navigation system across every storefront route. */
+.navbar { padding-inline: clamp(22px, 4vw, 64px); }
+.navInner { max-width: 1440px; }
+.navbar:not(.navStory) { background: #f4f1e8f5; border-bottom: 1px solid #193d3520; color: #193d35; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.navbar:not(.navStory) .logoName, .navbar:not(.navStory) .logoTagline, .navbar:not(.navStory) .navLink, .navbar:not(.navStory) .cartBtn, .navbar:not(.navStory) .mobileToggle { color: #193d35; }
+.navbar:not(.navStory) .logoIcon { width: 38px; height: 40px; background: none; color: #193d35; border: 0; box-shadow: none; }
+.logoIcon svg { width: 38px; height: 40px; }
+.logoName { font-size: 25px; font-weight: 500; letter-spacing: -.01em; }
+.logoTagline { font-size: 7px; font-weight: 500; letter-spacing: .2em; }
+.navLinks, .navStory .navLinks { gap: clamp(18px, 2vw, 32px); }
+.navLink { font-size: 10px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+.navLink::after { height: 1px; background: currentColor; }
+.navbar:not(.navStory) .navCta { color: #193d35; background: none; border: 1px solid #193d35; box-shadow: none; }
+.navCta { min-height: 44px; border-radius: 0; padding: 11px 22px; font-size: 9px; letter-spacing: .14em; }
+.navbar:not(.navStory) .navCta:hover { background: #193d35; color: #f4f1e8; }
+.navbar .cartBtn, .navbar .themeToggle { min-width: 44px; min-height: 44px; justify-content: center; }
+.navbar:not(.navStory) .moonIcon, .navbar:not(.navStory) .sunIcon { color: #193d35; }
+.navStory .moonIcon, .navStory .sunIcon { color: var(--nav-ink); }
+.cartBadge { background: #537c6c; color: #faf8f2; }
+.navbar:not(.navStory) .toggleBar { background: #193d35; }
+.mobileMenu { background: #f4f1e8; }
+.mobileMenu .navLink, .navStory .mobileMenu .navLink { font-family: var(--font-heading); font-size: 34px; line-height: 1.2; font-weight: 400; letter-spacing: -.02em; text-transform: none; }
+.mobileMenu .navCta { color: #193d35; border-color: #193d35; }
+@media (max-width: 1050px) { .navLinks { display: none; } .mobileToggle { display: flex; } }
+
+.navbar a:focus-visible,
+.navbar button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar, .navbar *, .navbar *::before, .navbar *::after { transition: none; }
+  .navCta:hover, .cartBtn:hover, .logo:hover .logoIcon { transform: none; }
+}

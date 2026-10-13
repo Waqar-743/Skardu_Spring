@@ -1,0 +1,20 @@
+.faqPageWrapper { min-height: 100dvh; background: var(--bg-page); color: var(--text-main); }
+.hero { position: relative; min-height: 560px; padding: calc(var(--nav-height) + 76px) 0 88px; display: flex; align-items: center; overflow: hidden; background: var(--bg-page); }
+.heroMedia { position: absolute; inset: 0 0 0 auto; width: 45%; }
+.heroImg { object-fit: cover; object-position: center; }
+.heroOverlay { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg-page) 0%, var(--bg-page) 46%, rgba(244, 241, 232, .6) 65%, rgba(244, 241, 232, .12) 100%); pointer-events: none; }
+.heroContent { position: relative; z-index: 1; width: calc(100% - clamp(40px, 8vw, 128px)); max-width: 1120px; margin: 0 auto; }
+.label { display: block; font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-heading); text-transform: uppercase; letter-spacing: .2em; margin-bottom: 28px; }
+.title { max-width: 58%; font-family: var(--font-heading); font-size: clamp(56px, 7.2vw, 104px); font-weight: 500; letter-spacing: -.04em; line-height: .98; color: var(--text-heading); margin-bottom: 28px; text-wrap: balance; }
+.title span { font-style: italic; }
+.desc { max-width: 46ch; width: 48%; font-size: 15px; color: var(--text-main); line-height: 1.9; text-wrap: pretty; }
+.contentSection { padding: 0; }
+@media (max-width: 767px) {
+  .hero { min-height: 0; padding: calc(var(--nav-height) + 48px) 0 0; flex-direction: column; align-items: stretch; }
+  .heroContent { order: 1; }
+  .heroMedia { position: relative; inset: auto; order: 2; width: 100%; aspect-ratio: 16 / 9; margin-top: 40px; }
+  .heroOverlay { display: none; }
+  .title { max-width: 100%; font-size: clamp(54px, 12vw, 76px); }
+  .desc { width: 100%; }
+  .label { font-size: 10px; margin-bottom: 22px; }
+}

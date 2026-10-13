@@ -1,0 +1,31 @@
+.faq { padding: clamp(72px, 9vw, 128px) 0; background: var(--bg-page); }
+.inner { width: calc(100% - clamp(40px, 8vw, 128px)); max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 7vw, 96px); align-items: start; }
+.header { position: sticky; top: calc(var(--nav-height) + 32px); }
+.label { display: block; font-family: var(--font-body); color: var(--text-heading); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; margin-bottom: 24px; }
+.title { font-family: var(--font-heading); font-size: clamp(40px, 4.5vw, 60px); font-weight: 500; color: var(--text-heading); letter-spacing: -.035em; line-height: 1.05; text-wrap: balance; }
+.title span { font-style: italic; }
+.accordion { display: flex; flex-direction: column; }
+.item { border-top: 1px solid rgba(25, 61, 53, .2); }
+.item:last-child { border-bottom: 1px solid rgba(25, 61, 53, .2); }
+.question { width: 100%; min-height: 72px; padding: 25px 0; display: flex; justify-content: space-between; align-items: center; gap: 24px; color: var(--text-heading); cursor: pointer; text-align: left; transition: color .2s ease; }
+.question:hover { color: var(--color-royal-blue); }
+.question:focus-visible { outline: 2px solid var(--text-heading); outline-offset: 5px; }
+.questionText { font-family: var(--font-body); font-size: 15px; line-height: 1.6; font-weight: 500; }
+.icon { flex-shrink: 0; width: 20px; height: 20px; position: relative; transition: transform .25s ease; }
+.icon::before, .icon::after { content: ''; position: absolute; background: currentColor; }
+.icon::before { width: 12px; height: 1px; top: 10px; left: 4px; }
+.icon::after { width: 1px; height: 12px; top: 4px; left: 10px; }
+.itemActive .icon { transform: rotate(45deg); }
+.answer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .28s ease, opacity .2s ease; }
+.itemActive .answer { grid-template-rows: 1fr; opacity: 1; }
+.answerInner { min-height: 0; overflow: hidden; }
+.answerCopy { padding: 0 38px 26px 0; color: var(--text-muted); line-height: 1.9; font-size: 14px; text-wrap: pretty; }
+@media (max-width: 767px) {
+  .inner { grid-template-columns: 1fr; gap: 36px; }
+  .header { position: static; }
+  .title { max-width: 360px; }
+  .question { gap: 18px; }
+  .questionText { font-size: 14px; }
+  .answerCopy { padding-right: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .question, .icon, .answer { transition: none; } }

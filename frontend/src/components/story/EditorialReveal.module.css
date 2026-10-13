@@ -1,0 +1,60 @@
+.journal { background: #f4f1e8; color: #263d33; padding: clamp(85px, 10vw, 165px) 0 90px; }
+.inner { max-width: 1440px; margin: 0 auto; padding: 0 clamp(22px, 4.5vw, 72px); }
+.header { position: relative; padding-bottom: 85px; }
+.kicker, .smallIndex { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.header h2 { margin: 28px 0 30px; font-family: var(--font-heading); font-size: clamp(40px, 6.3vw, 94px); font-weight: 400; letter-spacing: -.05em; line-height: 1.06; color: inherit; }
+.header h2 em, .journal h3 em { font-weight: 400; }
+.intro { margin-left: 51%; max-width: 42ch; font-size: 14px; line-height: 1.85; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.gallery { display: grid; grid-template-columns: 1.7fr 1fr; gap: clamp(30px, 6vw, 90px); }
+.orchard { margin-top: 160px; }
+.largeImage, .tallImage, .tablePhoto { position: relative; overflow: hidden; }
+.largeImage { aspect-ratio: 1.22; }
+.tallImage { aspect-ratio: .78; }
+.largeImage img, .tallImage img, .tablePhoto img { object-fit: cover; }
+.imageCaption { display: flex; justify-content: space-between; font-size: 8px; text-transform: uppercase; letter-spacing: .08em; margin-top: 16px; opacity: .72; }
+.articleCopy { padding-top: 45px; max-width: 510px; }
+.regionalNote { display: grid; grid-template-columns: 1.4fr 1fr; column-gap: 80px; margin-top: 105px; padding-top: 40px; border-top: 1px solid #263d333a; }
+.regionalNote > .kicker { grid-column: 1 / -1; }
+.regionalCopy { padding-top: 20px; }
+.regionalCopy > p { max-width: 49ch; font-size: 13px; line-height: 1.85; opacity: .8; }
+.journal h3 { font-family: var(--font-heading); color: inherit; font-size: clamp(31px, 3.6vw, 54px); font-weight: 400; line-height: 1.12; letter-spacing: -.025em; margin: 20px 0; }
+.journal article p, .tableCopy > p:not(.kicker), .water p { font-size: 13px; line-height: 1.85; max-width: 49ch; opacity: .8; }
+.textLink { display: flex; justify-content: space-between; align-items: center; gap: 24px; max-width: 320px; min-height: 44px; padding: 18px 0 10px; margin-top: 15px; border-bottom: 1px solid #263d333a; font-size: 11px; color: inherit; }
+.textLink span { transition: transform .3s ease; }
+.textLink:hover span { transform: translate(3px, -3px); }
+.textLink:active { transform: translateY(1px); }
+.textLink:focus-visible, .sources summary:focus-visible, .sources a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+.table { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: center; margin-top: 150px; }
+.tablePhoto { aspect-ratio: 1.3; }
+.tableCopy h3 { font-size: clamp(45px, 5.8vw, 88px); }
+.water { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; padding: 75px 0; margin-top: 100px; border-top: 1px solid #263d333a; scroll-margin-top: 90px; }
+.water h3 { font-size: clamp(32px, 3.2vw, 50px); }
+.sources { border-top: 1px solid #263d333a; border-bottom: 1px solid #263d333a; }
+.sources summary { display: flex; justify-content: space-between; padding: 25px 0; cursor: pointer; font-size: 13px; }
+.sources summary span { font-size: 10px; opacity: .7; }
+.sources > p { max-width: 76ch; font-size: 12px; line-height: 1.9; margin: 5px 0 25px; }
+.sources ul { list-style: none; padding: 0 0 25px; }
+.sources li a { display: flex; justify-content: space-between; gap: 20px; padding: 12px 0; font-size: 11px; border-top: 1px solid #263d331a; }
+.sources li span { opacity: .65; }
+@media (max-width: 767px) {
+  .journal { padding-top: 80px; padding-bottom: 60px; }
+  .header { padding-bottom: 45px; }
+  .header h2 { font-size: 39px; margin-top: 20px; }
+  .intro { margin-left: 0; font-size: 13px; }
+  .gallery, .table, .water { grid-template-columns: 1fr; gap: 45px; }
+  .regionalNote { grid-template-columns: 1fr; gap: 0; margin-top: 65px; }
+  .regionalCopy { padding-top: 0; }
+  .orchard { margin-top: 15px; }
+  .tallImage { aspect-ratio: 1.1; }
+  .articleCopy { padding-top: 30px; }
+  .table { margin-top: 75px; }
+  .tableCopy h3 { font-size: 52px; }
+  .water { margin-top: 65px; padding: 50px 0; gap: 15px; }
+  .sources li a { flex-direction: column; gap: 5px; }
+  .sources summary { gap: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .textLink span { transition: none; }
+  .textLink:hover span, .textLink:active { transform: none; }
+}

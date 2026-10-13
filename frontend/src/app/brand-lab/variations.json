@@ -1,0 +1,65 @@
+[
+  {
+    "id": "06A",
+    "family": 6,
+    "name": "The Quiet Ripple",
+    "desc": "A solid drop above two open ripples. Simple and direct at small sizes.",
+    "file": "/brand-concepts/logo-06a.svg"
+  },
+  {
+    "id": "06B",
+    "family": 6,
+    "name": "The Source Seal",
+    "desc": "The spring enclosed in a circular seal, suited to caps and embossed labels.",
+    "file": "/brand-concepts/logo-06b.svg"
+  },
+  {
+    "id": "06C",
+    "family": 6,
+    "name": "The Waterline Drop",
+    "desc": "A slender drop holding two flowing waterlines. A quieter, vertical identity.",
+    "file": "/brand-concepts/logo-06c.svg"
+  },
+  {
+    "id": "07A",
+    "family": 7,
+    "name": "The Cut Prism",
+    "desc": "A wider cut crystal with a mountain-like centre and fine internal facets.",
+    "file": "/brand-concepts/logo-07a.svg"
+  },
+  {
+    "id": "07B",
+    "family": 7,
+    "name": "The Solid Glacier",
+    "desc": "A bold crystalline silhouette with transparent facet cuts for strong contrast.",
+    "file": "/brand-concepts/logo-07b.svg"
+  },
+  {
+    "id": "07C",
+    "family": 7,
+    "name": "The Ice Bloom",
+    "desc": "Six precise crystal facets create a lighter, radial glacial mark.",
+    "file": "/brand-concepts/logo-07c.svg"
+  },
+  {
+    "id": "08A",
+    "family": 8,
+    "name": "The Woven Serif",
+    "desc": "Two staggered serif signatures with a clear separation at their overlap.",
+    "file": "/brand-concepts/logo-08a.svg"
+  },
+  {
+    "id": "08B",
+    "family": 8,
+    "name": "The Twin Signature",
+    "desc": "Mirrored serif initials create a symmetrical emblem with a central waterline.",
+    "file": "/brand-concepts/logo-08b.svg"
+  },
+  {
+    "id": "08C",
+    "family": 8,
+    "name": "The Flowing Ligature",
+    "desc": "Two custom continuous S strokes bring the monogram into a modern water motif.",
+    "file": "/brand-concepts/logo-08c.svg"
+  }
+]
