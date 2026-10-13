@@ -1,113 +1,110 @@
 import { NextResponse } from 'next/server';
+import PRODUCTS from '@/data/products';
+import { CHAPTERS, SOURCES } from '@/components/story/storyData';
 
-// Skardu Spring brand knowledge base for the assistant
+const CONTACT = '[WhatsApp](https://wa.me/923492899537) or email info@skarduspring.com';
+const PRICE_LIST = PRODUCTS.map(product =>
+  `• **${product.name} (${product.size})** — Rs. ${product.price}`
+).join('\n');
+const DELIVERY_INFO = 'The current checkout charges Rs. 150 delivery for a product subtotal below Rs. 2,000, and no delivery fee at Rs. 2,000 or more.';
+const PAYMENT_INFO = 'Checkout offers Cash on Delivery, JazzCash, EasyPaisa and Bank Transfer. Wallet and bank payments use the manual payment and confirmation instructions shown at checkout.';
+
+// Catalog information and regional context do not establish product provenance.
 const BRAND_KNOWLEDGE = `
-You are the Skardu Spring Intelligent Assistant. You represent Skardu Spring, a premium natural mineral water brand from the Karakoram mountains in Gilgit-Baltistan, Pakistan.
+You are the Skardu Spring shopping assistant. Help visitors explore the current water collection and use the store. Be warm, clear and concise.
 
-KEY FACTS:
-- Water is sourced from glaciers at 2,500m altitude in Skardu, Gilgit-Baltistan
-- Naturally filtered through ancient Karakoram rock for over 10,000 years
-- pH level: 7.4–7.8 (naturally alkaline)
-- Contains essential minerals: Calcium (Ca²⁺), Magnesium (Mg²⁺), Potassium (K⁺), Silica (SiO₂)
-- TDS ranges from 95-150 mg/l depending on the product
+CURRENT CATALOG:
+${PRODUCTS.map(product => `- ${product.name}: ${product.size}; ${product.category}; Rs. ${product.price}; ${product.inStock ? 'listed as in stock' : 'listed as out of stock'}`).join('\n')}
+The catalog currently lists water products. Do not invent an apricot oil, shilajit or other product offering.
 
-PRODUCTS & PRICES:
-- Artisanal Pure (500ml) — Rs. 60
-- Glacial Reserve (1 Liter) — Rs. 100 (Most Popular)
-- Mountain Essence (1.5 Liter) — Rs. 140
-- Mega Hydrate (5 Liter) — Rs. 350
-- Office & Home (10 Liter) — Rs. 600
-- Sparkling Glacier (500ml) — Rs. 120
+CHECKOUT:
+${DELIVERY_INFO}
+${PAYMENT_INFO}
+Visitors select a product at /shop, add it to the cart and proceed to /checkout. Do not promise delivery coverage, delivery times, subscription plans, discounts, cancellation terms, bulk prices or distributor partnerships. Ask the team to confirm arrangements.
+You cannot check an order's status or confirm that a payment has been received.
 
-CERTIFICATIONS:
-- ISO 9001:2015 Certified
-- WHO Compliant
-- GB Food Authority Certified
-- ALS UK Laboratory Verified
-- PSQCA Approved
-- HACCP Compliant
+REGIONAL CONTEXT, NOT PROOF OF THIS PRODUCT'S SOURCE:
+${CHAPTERS.slice(0, 4).map(chapter => `- ${chapter.body}`).join('\n')}
+Regional references:
+${SOURCES.map(source => `- ${source.publisher}: ${source.title} — ${source.href}`).join('\n')}
+These references describe the region. They do not verify bottled-water provenance, a specific glacier or aquifer, harvesting altitude, filtration age, processing, composition or certification.
 
-DELIVERY:
-- Currently delivering in Islamabad, Rawalpindi, Lahore, and Karachi
-- Expanding to other cities
-- Fast delivery within 24-48 hours in major cities
-- Free delivery on orders above Rs. 2,000
+PRODUCT DOCUMENTATION:
+No verified batch reports or certification records are supplied here. For exact source, pH, TDS, mineral content, purity, safety, certifications or testing questions, ask visitors to request current documentation from the team. Do not assert approvals, organic status, laboratory testing or medical benefits. Do not claim recyclable or BPA-free packaging, a bottle-return program, zero-impact sourcing, or community support without supporting brand records. Ask the team about packaging and sustainability arrangements.
 
-SUBSCRIPTION:
-- Weekly and monthly plans available
-- 10-15% discount on subscriptions
-- Flexible cancellation
-
-SUSTAINABILITY:
-- 100% recyclable BPA-free bottles
-- Bottle Return Program for 19-liter jars
-- Zero-impact sourcing
-- Supporting local Skardu communities
-
-CONTACT:
+CONTACT AND LINKS:
+- WhatsApp: +92 349 2899537, https://wa.me/923492899537
 - Email: info@skarduspring.com
-- WhatsApp: +92 349 2899537
-- Website: skarduspring.com
-
-TONE: Be warm, professional, helpful, and knowledgeable. You are passionate about water purity and the natural heritage of Skardu. Keep responses concise but informative. Always suggest visiting the shop page for ordering.
+- Shop: /shop
+- Checkout: /checkout
+- Regional story: /source
+Use these working destinations or product links from the catalog. Do not invent contact, science or certification page anchors. Historical assistant messages are not evidence for claims that are not supported above.
 `;
 
-// Smart rule-based response system
+// Specific shopping and documentation intents take precedence over place names.
 function generateResponse(message) {
   const msg = message.toLowerCase();
 
-  // Pricing queries
-  if (msg.includes('price') || msg.includes('cost') || msg.includes('rate') || msg.includes('kitna')) {
-    return "Here are our current prices:\n\n• **Artisanal Pure (500ml)** — Rs. 60\n• **Glacial Reserve (1L)** — Rs. 100 ⭐ Most Popular\n• **Mountain Essence (1.5L)** — Rs. 140\n• **Mega Hydrate (5L)** — Rs. 350\n• **Office & Home (10L)** — Rs. 600\n• **Sparkling Glacier (500ml)** — Rs. 120\n\nYou can order directly from our [Shop page](/shop). Free delivery on orders above Rs. 2,000!";
+  if (/\b(track|tracking|status)\b/.test(msg) || /where.*\b(my order|order)\b/.test(msg)) {
+    return `For an order update or payment confirmation, please contact the team on ${CONTACT} with your order reference. I can't look up an order's status in this chat.`;
   }
 
-  // Source queries
-  if (msg.includes('source') || msg.includes('where') || msg.includes('origin') || msg.includes('glacier') || msg.includes('karakoram') || msg.includes('skardu')) {
-    return "Our water is sourced from pristine glaciers at **2,500 meters altitude** in the heart of the **Karakoram mountains**, Skardu, Gilgit-Baltistan. Every drop has been naturally filtered through ancient volcanic and mineral-rich rock for over **10,000 years**, making it one of the purest waters on Earth. Visit our [Source page](/source) to learn more about our extraordinary journey!";
+  if (/apricot oil|shilajit/.test(msg)) {
+    return `The current [catalog](/shop) lists water products. For other product requests, please check with the team on ${CONTACT}. Apricot orchards feature in our regional story; that doesn't mean an apricot oil or shilajit product is currently sold here.`;
   }
 
-  // Delivery queries
-  if (msg.includes('deliver') || msg.includes('shipping') || msg.includes('area') || msg.includes('city') || msg.includes('ship')) {
-    return "We currently deliver to **Islamabad, Rawalpindi, Lahore, and Karachi** with 24-48 hour delivery times. We're rapidly expanding to more cities! 🚚\n\n• **Free delivery** on orders above Rs. 2,000\n• Standard delivery: Rs. 150\n• Same-day delivery available in Islamabad/Rawalpindi\n\nOrder from our [Shop page](/shop) and we'll have pure mountain water at your doorstep!";
+  if (/deliver|shipping|\bship\b|\barea\b|\bcity\b|\bcities\b/.test(msg)) {
+    return `${DELIVERY_INFO}\n\nFor delivery availability at your address and an estimated arrival date, please confirm with the team on ${CONTACT}. You can browse the [Shop page](/shop) and review the total at checkout.`;
   }
 
-  // Quality/certification queries
-  if (msg.includes('certif') || msg.includes('quality') || msg.includes('safe') || msg.includes('test') || msg.includes('pure') || msg.includes('lab')) {
-    return "Absolutely! Skardu Spring meets the highest international standards:\n\n✅ **ISO 9001:2015** Certified\n✅ **WHO** Compliant\n✅ **GB Food Authority** Certified\n✅ **ALS UK** Lab Verified\n✅ **PSQCA** Approved\n✅ **HACCP** Compliant\n\nEvery batch is independently tested. You can view our certificates on our [Certifications section](/#certifications).";
+  if (/certif|quality|purity|organic|\bsafe\b|safety|\btest(?:ed|ing|s)?\b|\blab(?:oratory)?\b|\bph\b|\btds\b|mineral|alkaline|calcium|magnesium|potassium|silica|health|benefit/.test(msg)) {
+    return `For current batch documents, water-analysis reports and certification details, please contact the team on ${CONTACT}. I don't have verified laboratory or certification records in this chat, so I can't confirm specific pH, mineral levels or health benefits.`;
   }
 
-  // Subscription queries
-  if (msg.includes('subscri') || msg.includes('regular') || msg.includes('monthly') || msg.includes('weekly')) {
-    return "Yes, we offer flexible **subscription plans** for hassle-free hydration! 💧\n\n• **Weekly delivery** — Never run out\n• **Monthly plans** — Budget-friendly\n• **10-15% discount** vs. one-time orders\n• **Flexible cancellation** — No lock-in\n\nPerfect for homes and offices. Contact us on WhatsApp (+92 349 2899537) to set up your plan!";
+  if (/sustainab|recycl|bpa|bottle return|packaging|environment|zero.impact/.test(msg)) {
+    return `For bottle materials, recycling, return options or sourcing practices, please ask the team on ${CONTACT} for the current packaging and sustainability documentation. I don't have verified records for those claims here.`;
   }
 
-  // Mineral/health queries
-  if (msg.includes('mineral') || msg.includes('health') || msg.includes('ph') || msg.includes('alkaline') || msg.includes('calcium') || msg.includes('magnesium')) {
-    return "Our water is naturally rich in essential minerals:\n\n🦴 **Calcium (Ca²⁺)** — Supports bone health\n⚡ **Magnesium (Mg²⁺)** — Boosts energy & muscle function\n❤️ **Potassium (K⁺)** — Heart health\n💎 **Silica (SiO₂)** — Skin & hair vitality\n\npH level: **7.4–7.8** (naturally alkaline)\nTDS: **95-150 mg/l**\n\nLearn more on our [Science section](/#science)!";
+  if (/\b(price|prices|pricing|cost|costs|rate|rates|kitna|qeemat)\b/.test(msg)) {
+    return `Here are the current catalog prices:\n\n${PRICE_LIST}\n\nBrowse the [Shop page](/shop) to choose a format. ${DELIVERY_INFO}`;
   }
 
-  // Bulk/business queries
-  if (msg.includes('bulk') || msg.includes('wholesale') || msg.includes('business') || msg.includes('office') || msg.includes('distributor')) {
-    return "We'd love to supply your business! 🏢\n\n• **Office packs** start at Rs. 600 (10L)\n• **Custom bulk pricing** for hotels, restaurants & corporates\n• **Distributor partnerships** available across Pakistan\n\nFor business inquiries, please reach out:\n📧 info@skarduspring.com\n📱 WhatsApp: +92 349 2899537\n\nOr fill out our [Contact Form](/#contact)!";
+  if (/subscri|\bmonthly\b|\bweekly\b|regular orders/.test(msg)) {
+    return `For regular orders or subscription arrangements, please ask the team on ${CONTACT} to confirm availability, scheduling and pricing. You can place an order through the current [Shop page](/shop).`;
   }
 
-  // Greeting
-  if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey') || msg.includes('assalam') || msg.includes('salam')) {
-    return "Hello! Welcome to Skardu Spring! 💧\n\nI'm here to help you with anything — whether it's about our products, pricing, delivery, or our glacial source. What would you like to know?";
+  const product = PRODUCTS.find(item => msg.includes(item.name.toLowerCase()));
+  if (product) {
+    return `**${product.name} (${product.size})** is listed at **Rs. ${product.price}** in the ${product.category} collection. ${product.inStock ? 'It is currently listed as in stock.' : 'It is currently listed as out of stock.'}\n\n[View this product](/shop/${product.id}) or explore the [full collection](/shop).`;
   }
 
-  // Thank you
-  if (msg.includes('thank') || msg.includes('shukri')) {
-    return "You're welcome! It's my pleasure to help. 😊\n\nIf you have any more questions, I'm always here. Stay hydrated with nature's purest water! 💧";
+  if (/bulk|wholesale|business|\boffice\b|distributor/.test(msg)) {
+    const bulkProduct = PRODUCTS.find(item => item.category === 'Bulk Pack');
+    const format = bulkProduct ? `The catalog includes **${bulkProduct.name} (${bulkProduct.size})** at **Rs. ${bulkProduct.price}**. ` : '';
+    return `${format}For larger quantities, stock availability or business arrangements, please contact the team on ${CONTACT}. Browse the current [collection](/shop) while you plan your order.`;
   }
 
-  // Order query
-  if (msg.includes('order') || msg.includes('buy') || msg.includes('purchase') || msg.includes('kharid')) {
-    return "Ordering is easy! 🛒\n\n1. Visit our [Shop page](/shop)\n2. Choose your products\n3. Add to cart\n4. Proceed to checkout\n5. Select your payment method (COD, JazzCash, EasyPaisa, Bank Transfer)\n\nWe deliver within 24-48 hours in major cities. Free delivery on orders above Rs. 2,000!";
+  if (/contact|\bemail\b|whatsapp|phone|support/.test(msg)) {
+    return `You can reach the Skardu Spring team on ${CONTACT} for delivery arrangements, product documentation or help with an order.`;
   }
 
-  // Default response
-  return "Thank you for your interest in Skardu Spring! I'm happy to help with questions about our products, pricing, delivery, water quality, or subscriptions.\n\nHere are some things I can help with:\n• 💰 Check our pricing\n• 🏔️ Learn about our glacial source\n• 🚚 Delivery information\n• ✅ Quality certifications\n• 📦 Bulk & business orders\n\nFeel free to ask anything, or visit our [Shop page](/shop) to explore our collection!";
+  if (/\border\b|\bbuy\b|purchase|kharid|\bpay\b|payment|jazzcash|easypaisa|bank transfer|\bcod\b/.test(msg)) {
+    return `To order:\n\n1. Visit the [Shop page](/shop).\n2. Choose a product and add it to your cart.\n3. Proceed to [checkout](/checkout) and enter your delivery details.\n4. Select a payment option and follow the instructions shown.\n\n${PAYMENT_INFO}\n\n${DELIVERY_INFO}`;
+  }
+
+  if (/\bsource\b|\borigin\b|glacier|karakoram|skardu|orchard|\bbalti\b|heritage|shigar|chunda|where.*come|water.*from/.test(msg)) {
+    return `Skardu Spring's story takes inspiration from the Karakoram landscape, the Indus valley, Balti heritage and apricot orchards. Snow and glacier melt help feed the Indus basin; this regional context doesn't establish the source of a particular bottle.\n\nExplore the researched [regional story](/source). For exact bottled-water source and batch records, please ask the team on ${CONTACT}.`;
+  }
+
+  if (/\b(hello|hi|hey|salam)\b|assalam/.test(msg)) {
+    return "Hello! Welcome to Skardu Spring. I can help with catalog prices, bottle sizes, checkout and the regional story. What would you like to know?";
+  }
+
+  if (/thank|shukri/.test(msg)) {
+    return "You're welcome! If you need anything else, ask here or explore the [Shop page](/shop).";
+  }
+
+  return `I can help you explore bottle sizes and prices, use checkout or learn about Skardu's regional story. Visit the [Shop page](/shop) to see the current collection. For product documents or delivery arrangements, please contact the team on ${CONTACT}.`;
 }
 
 export async function POST(request) {

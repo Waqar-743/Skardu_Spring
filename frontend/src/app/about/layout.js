@@ -1,9 +1,9 @@
 export const metadata = {
-  title: 'Our Story | Skardu Spring — Premium Glacial Water from Karakoram',
-  description: 'Discover the story of Skardu Spring — how 10,000 years of natural glacial filtration creates the purest mineral water on Earth. Learn about our mission, values, and commitment to sustainability.',
+  title: 'Our Story | Skardu Spring',
+  description: 'Discover the Baltistan landscapes and living heritage that inspire Skardu Spring, from the Indus valley to local craftsmanship.',
   openGraph: {
     title: 'Our Story | Skardu Spring',
-    description: 'Discover the story of Skardu Spring — 10,000 years of natural glacial filtration.',
+    description: 'The landscapes and living heritage of Baltistan inspire the Skardu Spring story.',
   },
 };
 

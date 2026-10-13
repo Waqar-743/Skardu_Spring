@@ -1,9 +1,11 @@
 'use client';
 
+import { publicPath, hasServerAPI, apiPath } from '@/lib/deployment';
+
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   IoCartOutline,
   IoLocationOutline,
@@ -15,6 +17,10 @@ import {
   IoShieldCheckmarkOutline,
   IoLockClosedOutline,
   IoCallOutline,
+  IoCashOutline,
+  IoPhonePortraitOutline,
+  IoWalletOutline,
+  IoBusinessOutline,
 } from 'react-icons/io5';
 import { useCart } from '@/context/CartContext';
 import styles from './Checkout.module.css';
@@ -27,10 +33,10 @@ const STEPS = [
 ];
 
 const PAYMENT_METHODS = [
-  { id: 'cod', name: 'Cash on Delivery', desc: 'Pay when your order arrives at your doorstep', icon: '💵' },
-  { id: 'jazzcash', name: 'JazzCash', desc: 'Pay via JazzCash mobile wallet', icon: '📱' },
-  { id: 'easypaisa', name: 'EasyPaisa', desc: 'Pay via EasyPaisa mobile wallet', icon: '📲' },
-  { id: 'bank', name: 'Bank Transfer', desc: 'Direct bank transfer with receipt confirmation', icon: '🏦' },
+  { id: 'cod', name: 'Cash on Delivery', desc: 'Pay when your order arrives at your doorstep', icon: <IoCashOutline /> },
+  { id: 'jazzcash', name: 'JazzCash', desc: 'Pay via JazzCash mobile wallet', icon: <IoPhonePortraitOutline /> },
+  { id: 'easypaisa', name: 'EasyPaisa', desc: 'Pay via EasyPaisa mobile wallet', icon: <IoWalletOutline /> },
+  { id: 'bank', name: 'Bank Transfer', desc: 'Direct bank transfer with receipt confirmation', icon: <IoBusinessOutline /> },
 ];
 
 const CITIES = [
@@ -58,6 +64,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [errors, setErrors] = useState({});
+  const shouldReduceMotion = useReducedMotion();
 
   const deliveryFee = cartTotal >= 2000 ? 0 : 150;
   const total = cartTotal + deliveryFee;
@@ -95,9 +102,23 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = async () => {
+    if (!hasServerAPI) {
+      const lines = [
+        'Hello, I would like to request an order from Skardu Spring:',
+        ...cart.map(item => `${item.quantity} × ${item.name} — PKR ${item.price * item.quantity}`),
+        `Subtotal: PKR ${cartTotal}; delivery estimate: PKR ${deliveryFee}; total: PKR ${total}`,
+        `Name: ${shipping.fullName}; phone: ${shipping.phone}`,
+        `Address: ${shipping.address}, ${shipping.city} ${shipping.postalCode}`,
+        `Preferred payment: ${PAYMENT_METHODS.find(method => method.id === paymentMethod)?.name}`,
+        shipping.notes ? `Notes: ${shipping.notes}` : '',
+        'Please confirm availability, delivery cost and payment instructions before processing.',
+      ].filter(Boolean);
+      window.open(`https://wa.me/923492899537?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
+      return;
+    }
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/orders', {
+      const res = await fetch(apiPath('orders'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -154,11 +175,19 @@ export default function CheckoutPage() {
   return (
     <div className={styles.checkoutPage}>
       <div className={styles.container}>
+        <header className={styles.header}>
+          <span className={styles.kicker}>Skardu Spring / Checkout</span>
+          <h1>Your order.</h1>
+          <p>Review your selection and choose your delivery and payment details.</p>
+          {!hasServerAPI && <p>Complete your request on WhatsApp. Our team will confirm availability, delivery and payment; no order or payment is processed automatically.</p>}
+        </header>
         {/* Step Indicator */}
-        <div className={styles.stepIndicator}>
+        <div className={styles.stepIndicator} role="list" aria-label="Checkout progress">
           {STEPS.map((step, i) => (
             <div
               key={step.id}
+              role="listitem"
+              aria-current={i === currentStep ? 'step' : undefined}
               className={`${styles.step} ${i <= currentStep ? styles.stepActive : ''} ${i < currentStep ? styles.stepDone : ''}`}
             >
               <div className={styles.stepCircle}>
@@ -178,9 +207,9 @@ export default function CheckoutPage() {
               {currentStep === 0 && (
                 <motion.div
                   key="cart"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={shouldReduceMotion ? false : { opacity: 1, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
+                  exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 12 }}
                   className={styles.stepContent}
                 >
                   <h2 className={styles.stepTitle}>Review Your Cart</h2>
@@ -188,16 +217,16 @@ export default function CheckoutPage() {
                     {cart.map((item) => (
                       <div key={item.id} className={styles.cartItem}>
                         <div className={styles.cartItemImage}>
-                          <Image src={item.image} alt={item.name} fill style={{ objectFit: 'contain' }} />
+                          <Image src={item.image} alt={item.name} fill sizes="58px" style={{ objectFit: 'contain' }} />
                         </div>
                         <div className={styles.cartItemInfo}>
                           <h4>{item.name}</h4>
                           <p className={styles.cartItemPrice}>Rs. {item.price}</p>
                         </div>
                         <div className={styles.cartItemQty}>
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>−</button>
+                          <button type="button" aria-label={`Decrease ${item.name} quantity`} onClick={() => updateQuantity(item.id, item.quantity - 1)}>−</button>
                           <span>{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                          <button type="button" aria-label={`Increase ${item.name} quantity`} onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
                         </div>
                         <div className={styles.cartItemTotal}>
                           Rs. {item.price * item.quantity}
@@ -205,7 +234,8 @@ export default function CheckoutPage() {
                         <button
                           className={styles.cartItemRemove}
                           onClick={() => removeFromCart(item.id)}
-                          aria-label="Remove item"
+                          aria-label={`Remove ${item.name} from cart`}
+                          type="button"
                         >
                           <IoTrashOutline />
                         </button>
@@ -219,71 +249,91 @@ export default function CheckoutPage() {
               {currentStep === 1 && (
                 <motion.div
                   key="shipping"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={shouldReduceMotion ? false : { opacity: 1, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
+                  exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 12 }}
                   className={styles.stepContent}
                 >
                   <h2 className={styles.stepTitle}>Shipping Details</h2>
                   <form className={styles.shippingForm} onSubmit={(e) => e.preventDefault()}>
                     <div className={styles.formRow}>
                       <div className={styles.formGroup}>
-                        <label>Full Name *</label>
+                        <label htmlFor="shipping-name">Full Name *</label>
                         <input
                           type="text"
                           name="fullName"
+                          id="shipping-name"
+                          autoComplete="name"
+                          aria-invalid={Boolean(errors.fullName)}
+                          aria-describedby={errors.fullName ? 'shipping-name-error' : undefined}
                           value={shipping.fullName}
                           onChange={handleShippingChange}
                           placeholder="e.g. Muhammad Ali"
                           className={errors.fullName ? styles.inputError : ''}
                         />
-                        {errors.fullName && <span className={styles.errorMsg}>{errors.fullName}</span>}
+                        {errors.fullName && <span id="shipping-name-error" className={styles.errorMsg}>{errors.fullName}</span>}
                       </div>
                       <div className={styles.formGroup}>
-                        <label>Phone Number *</label>
+                        <label htmlFor="shipping-phone">Phone Number *</label>
                         <input
                           type="tel"
                           name="phone"
+                          id="shipping-phone"
+                          autoComplete="tel"
+                          aria-invalid={Boolean(errors.phone)}
+                          aria-describedby={errors.phone ? 'shipping-phone-error' : undefined}
                           value={shipping.phone}
                           onChange={handleShippingChange}
                           placeholder="+92 3XX XXXXXXX"
                           className={errors.phone ? styles.inputError : ''}
                         />
-                        {errors.phone && <span className={styles.errorMsg}>{errors.phone}</span>}
+                        {errors.phone && <span id="shipping-phone-error" className={styles.errorMsg}>{errors.phone}</span>}
                       </div>
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label>Email (Optional — for order confirmation)</label>
+                      <label htmlFor="shipping-email">Email (Optional — for order confirmation)</label>
                       <input
                         type="email"
                         name="email"
+                        id="shipping-email"
+                        autoComplete="email"
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? 'shipping-email-error' : undefined}
                         value={shipping.email}
                         onChange={handleShippingChange}
                         placeholder="your@email.com"
                         className={errors.email ? styles.inputError : ''}
                       />
-                      {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
+                      {errors.email && <span id="shipping-email-error" className={styles.errorMsg}>{errors.email}</span>}
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label>Delivery Address *</label>
+                      <label htmlFor="shipping-address">Delivery Address *</label>
                       <textarea
                         name="address"
+                        id="shipping-address"
+                        autoComplete="street-address"
+                        aria-invalid={Boolean(errors.address)}
+                        aria-describedby={errors.address ? 'shipping-address-error' : undefined}
                         value={shipping.address}
                         onChange={handleShippingChange}
                         placeholder="House #, Street, Area, Sector"
                         rows="3"
                         className={errors.address ? styles.inputError : ''}
                       />
-                      {errors.address && <span className={styles.errorMsg}>{errors.address}</span>}
+                      {errors.address && <span id="shipping-address-error" className={styles.errorMsg}>{errors.address}</span>}
                     </div>
 
                     <div className={styles.formRow}>
                       <div className={styles.formGroup}>
-                        <label>City *</label>
+                        <label htmlFor="shipping-city">City *</label>
                         <select
                           name="city"
+                          id="shipping-city"
+                          autoComplete="address-level2"
+                          aria-invalid={Boolean(errors.city)}
+                          aria-describedby={errors.city ? 'shipping-city-error' : undefined}
                           value={shipping.city}
                           onChange={handleShippingChange}
                           className={errors.city ? styles.inputError : ''}
@@ -291,13 +341,15 @@ export default function CheckoutPage() {
                           <option value="">Select City</option>
                           {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
                         </select>
-                        {errors.city && <span className={styles.errorMsg}>{errors.city}</span>}
+                        {errors.city && <span id="shipping-city-error" className={styles.errorMsg}>{errors.city}</span>}
                       </div>
                       <div className={styles.formGroup}>
-                        <label>Postal Code</label>
+                        <label htmlFor="shipping-postal-code">Postal Code</label>
                         <input
                           type="text"
                           name="postalCode"
+                          id="shipping-postal-code"
+                          autoComplete="postal-code"
                           value={shipping.postalCode}
                           onChange={handleShippingChange}
                           placeholder="44000"
@@ -306,9 +358,10 @@ export default function CheckoutPage() {
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label>Delivery Notes (Optional)</label>
+                      <label htmlFor="shipping-notes">Delivery Notes (Optional)</label>
                       <textarea
                         name="notes"
+                        id="shipping-notes"
                         value={shipping.notes}
                         onChange={handleShippingChange}
                         placeholder="Ring the bell, leave at reception, etc."
@@ -323,30 +376,25 @@ export default function CheckoutPage() {
               {currentStep === 2 && (
                 <motion.div
                   key="payment"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={shouldReduceMotion ? false : { opacity: 1, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
+                  exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: 12 }}
                   className={styles.stepContent}
                 >
                   <h2 className={styles.stepTitle}>Payment Method</h2>
                   <div className={styles.paymentMethods}>
                     {PAYMENT_METHODS.map((method) => (
-                      <div
+                      <label
                         key={method.id}
                         className={`${styles.paymentCard} ${paymentMethod === method.id ? styles.paymentActive : ''}`}
-                        onClick={() => setPaymentMethod(method.id)}
                       >
-                        <div className={styles.paymentRadio}>
-                          <div className={styles.radioOuter}>
-                            {paymentMethod === method.id && <div className={styles.radioInner} />}
-                          </div>
-                        </div>
-                        <div className={styles.paymentIcon}>{method.icon}</div>
-                        <div className={styles.paymentInfo}>
-                          <h4>{method.name}</h4>
-                          <p>{method.desc}</p>
-                        </div>
-                      </div>
+                        <input type="radio" name="paymentMethod" value={method.id} checked={paymentMethod === method.id} onChange={() => setPaymentMethod(method.id)} className={styles.paymentInput} aria-label={method.name} />
+                        <span className={styles.paymentIcon} aria-hidden="true">{method.icon}</span>
+                        <span className={styles.paymentInfo}>
+                          <span className={styles.paymentName}>{method.name}</span>
+                          <span className={styles.paymentDescription}>{method.desc}</span>
+                        </span>
+                      </label>
                     ))}
                   </div>
 
@@ -400,8 +448,7 @@ export default function CheckoutPage() {
                         checked={termsAccepted} 
                         onChange={(e) => setTermsAccepted(e.target.checked)} 
                       />
-                      <span className={styles.checkmark}></span>
-                      I have read and agree to the <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> and <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                      I have read and agree to the <a href={publicPath('/terms')} target="_blank" rel="noopener noreferrer">Terms of Service</a> and <a href={publicPath('/privacy-policy')} target="_blank" rel="noopener noreferrer">Privacy Policy</a>
                     </label>
                     {errors.terms && <span className={styles.errorMsg}>{errors.terms}</span>}
                   </div>
@@ -412,7 +459,7 @@ export default function CheckoutPage() {
               {currentStep === 3 && orderResult && (
                 <motion.div
                   key="confirmation"
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={shouldReduceMotion ? false : { scale: .98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className={styles.stepContent}
                 >
@@ -485,7 +532,7 @@ export default function CheckoutPage() {
                     }}
                     disabled={isSubmitting || !termsAccepted}
                   >
-                    {isSubmitting ? 'Placing Order...' : 'Place Order'}
+                    {isSubmitting ? 'Placing Order...' : hasServerAPI ? 'Place Order' : 'Review order on WhatsApp'}
                     {!isSubmitting && <IoShieldCheckmarkOutline />}
                   </button>
                 )}
@@ -503,7 +550,7 @@ export default function CheckoutPage() {
                   {cart.map((item) => (
                     <div key={item.id} className={styles.summaryItem}>
                       <div className={styles.summaryItemImage}>
-                        <Image src={item.image} alt={item.name} fill style={{ objectFit: 'contain' }} />
+                        <Image src={item.image} alt={item.name} fill sizes="48px" style={{ objectFit: 'contain' }} />
                         <span className={styles.summaryItemQty}>{item.quantity}</span>
                       </div>
                       <div className={styles.summaryItemInfo}>

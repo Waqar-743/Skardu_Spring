@@ -32,3 +32,6 @@
 .icon {
   font-size: 1.2rem;
 }
+.toast { background: #faf8f2; color: #193d35; border-radius: 0; border-left-color: #537c6c; font-size: 12px; font-weight: 500; }
+.success, .info { border-left-color: #537c6c; }
+@media (max-width: 480px) { .toastContainer { left: 18px; right: 18px; bottom: 20px; } }

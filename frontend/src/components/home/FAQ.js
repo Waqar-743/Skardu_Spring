@@ -1,63 +1,58 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './FAQ.module.css';
 
 const faqs = [
   {
     id: 'source',
     question: "Where is the source of Skardu Spring water?",
-    answer: "Our water is sourced directly from a protected deep-seated spring in the heart of the Karakoram glaciers in Skardu, at an altitude of over 2,500 meters. This ensures the water remains untouched by environmental pollutants."
+    answer: "Please check the label of the product you are ordering and ask our team for its source information. Request the relevant product details before you place an order."
   },
   {
     id: 'purification',
     question: "How is the water purified and filtered?",
-    answer: "Skardu Spring undergoes a 10,000-year natural filtration journey through mineral-rich volcanic rock. We supplement this with a gentle 7-stage lab-controlled process, including UV treatment and micron filtration, to ensure 100% safety without stripping away natural minerals."
+    answer: "Please contact our team for the treatment and filtration details of the product you are ordering. Ask for the relevant product documentation and batch test results before deciding whether it meets your needs."
   },
   {
     id: 'certifications',
-    question: "Is Skardu Spring certified for safety?",
-    answer: "Yes, we fully comply with WHO guidelines and are certified by the GB Food Authority. Our facilities are ISO 9001:2015 certified, and every batch is tested by independent laboratories to ensure zero contaminants."
+    question: "Where can I find quality and certification information?",
+    answer: "You can read the quality documents linked on this website. For a batch’s test results or current certification documents, contact us before ordering and check the product and dates covered by each document."
   },
   {
     id: 'minerals',
-    question: "What are the key minerals found in the water?",
-    answer: "Our water is naturally rich in essential minerals, including Calcium (for bone health), Magnesium (for energy), and Potassium (for heart health). It maintains a perfectly balanced pH level of 7.4–7.8, making it naturally alkaline."
+    question: "How can I check the mineral content?",
+    answer: "Use the product label and the relevant laboratory report to check mineral content, pH and other measurements. Contact us for information about a particular product or batch before ordering."
   },
   {
     id: 'delivery',
     question: "Where do you deliver within Pakistan?",
-    answer: "We currently provide direct home and office delivery in Islamabad, Rawalpindi, Lahore, and Karachi. We are rapidly expanding to other major cities; please check our delivery map for the latest updates in your area."
+    answer: "We currently offer home and office delivery in Islamabad, Rawalpindi, Lahore and Karachi. Contact us with your location to confirm availability and delivery timing before placing an order."
   },
   {
     id: 'packaging',
     question: "What packaging sizes are available for purchase?",
-    answer: "We offer a range of premium packaging including 500ml, 1.5L, and 5L bottles for personal use, as well as our 19-liter family/office jars. All our bottles are designed for easy handling and freshness preservation."
+    answer: "The current collection lists 500ml, 1 liter, 1.5 liter, 5 liter and 10 liter options. Check the product page for the size and pack you want before adding it to your cart."
   },
   {
     id: 'environment',
-    question: "Is your packaging environmentally friendly?",
-    answer: "Sustainability is core to our brand. Our bottles are 100% recyclable and BPA-free. We also run a 'Bottle Return' program for our 19-liter jars to minimize plastic waste and reduce our carbon footprint."
+    question: "How should I dispose of the packaging?",
+    answer: "Check the packaging for its material and recycling instructions, and follow the collection rules in your area. Contact us if you need information about the packaging for a particular product."
   },
   {
     id: 'storage',
     question: "How should I store Skardu Spring water?",
-    answer: "To maintain the pristine taste, store the bottles in a cool, dry place away from direct sunlight and strong-smelling chemicals. Once opened, it is best consumed within 3 to 5 days."
+    answer: "Please follow the storage and use instructions printed on the product label. Contact our team if those instructions are unclear or if you need guidance for a particular product."
   },
   {
     id: 'subscription',
     question: "Do you offer subscription plans for regular delivery?",
-    answer: "Yes, we offer flexible weekly and monthly subscription plans for both homes and offices. Subscribing ensures you never run out of pure water and provides a 10-15% discount compared to one-time orders."
+    answer: "For regular deliveries to a home or office, contact us to discuss availability, scheduling and current pricing. Please confirm the arrangement before ordering."
   }
 ];
 
 export default function FAQ() {
   const [activeId, setActiveId] = useState(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    Promise.resolve().then(() => setIsMounted(true));
-  }, []);
 
   const toggleAccordion = (id) => {
     setActiveId(activeId === id ? null : id);
@@ -72,22 +67,25 @@ export default function FAQ() {
         </div>
 
         <div className={styles.accordion}>
-          {isMounted && faqs.map((faq) => (
+          {faqs.map((faq) => (
             <div 
               key={faq.id} 
               className={`${styles.item} ${activeId === faq.id ? styles.itemActive : ''}`}
             >
               <button 
+                type="button"
+                id={`faq-question-${faq.id}`}
+                aria-controls={`faq-answer-${faq.id}`}
                 className={styles.question} 
                 onClick={() => toggleAccordion(faq.id)}
                 aria-expanded={activeId === faq.id}
               >
-                <h3>{faq.question}</h3>
-                <div className={styles.icon}></div>
+                <span className={styles.questionText}>{faq.question}</span>
+                <span className={styles.icon} aria-hidden="true" />
               </button>
-              <div className={styles.answer}>
+              <div className={styles.answer} id={`faq-answer-${faq.id}`} role="region" aria-labelledby={`faq-question-${faq.id}`} aria-hidden={activeId !== faq.id} inert={activeId !== faq.id}>
                 <div className={styles.answerInner}>
-                  {faq.answer}
+                  <div className={styles.answerCopy}>{faq.answer}</div>
                 </div>
               </div>
             </div>

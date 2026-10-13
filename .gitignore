@@ -16,6 +16,8 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
 
 # Logs
 npm-debug.log*
@@ -32,3 +34,20 @@ Thumbs.db
 
 # Legacy files
 legacy/
+
+# Runtime records and local visual-review output
+frontend/data/
+frontend/.shots/
+frontend/.pages-build/
+brand-review/
+
+# Local browser/video inspection helpers
+scripts/cinematic-capture.cjs
+scripts/cinematic-qa.cjs
+scripts/commerce-smoke.cjs
+scripts/commerce-qa.cjs
+scripts/route-consistency-qa.cjs
+scripts/pages-smoke.cjs
+scripts/inspect-motion-video.cjs
+scripts/capture-scroll-demo.cjs
+scripts/make-motion-demo.py

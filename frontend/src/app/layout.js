@@ -1,6 +1,8 @@
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import MotionPreferences from '@/components/layout/MotionPreferences';
+import HashNavigation from '@/components/layout/HashNavigation';
 import Script from 'next/script';
 import { FaWhatsapp } from 'react-icons/fa';
 import dynamic from 'next/dynamic';
@@ -8,12 +10,12 @@ import dynamic from 'next/dynamic';
 const Assistant = dynamic(() => import('@/components/layout/Assistant'));
 
 export const metadata = {
-  title: 'Skardu Spring | Premium Natural Mineral Water from Karakoram',
-  description: 'Born from the pristine glaciers of Skardu, Pakistan. Skardu Spring delivers nature\'s purest mineral water — naturally filtered through ancient Karakoram rock for over 10,000 years.',
+  title: 'Skardu Spring | A Place. A People. A Spring.',
+  description: 'Discover Skardu Spring through the landscapes, living heritage and apricot orchards of Baltistan. Explore our water collection and the story behind the place.',
   keywords: 'skardu spring, mineral water, glacier water, karakoram water, pakistan water brand, premium water, natural spring water',
   openGraph: {
     title: 'Skardu Spring | Premium Natural Mineral Water',
-    description: 'Pure mountain water from the Karakoram glaciers. Naturally filtered for 10,000 years.',
+    description: 'A journey through the mountains, rivers and living heritage of Baltistan.',
     type: 'website',
   },
 };
@@ -35,7 +37,7 @@ export default function RootLayout({ children }) {
               "name": "Skardu Spring",
               "url": "https://skarduspring.com",
               "logo": "https://skarduspring.com/images/logo.png",
-              "description": "Premium glacial mineral water from the Karakoram mountains. Naturally filtered for 10,000 years.",
+              "description": "Skardu Spring water and the landscapes and heritage of Baltistan.",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+923492899537",
@@ -50,10 +52,13 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body suppressHydrationWarning>
+        <MotionPreferences>
         <ThemeProvider>
           <CartProvider>
+            <a href="#main-content" className="skip-link">Skip to content</a>
             <Navbar />
-            <main>{children}</main>
+            <HashNavigation />
+            <main id="main-content" tabIndex={-1}>{children}</main>
             <Footer />
             <Assistant />
             <CartDrawer />
@@ -69,6 +74,7 @@ export default function RootLayout({ children }) {
             </a>
           </CartProvider>
         </ThemeProvider>
+        </MotionPreferences>
       </body>
     </html>
   );

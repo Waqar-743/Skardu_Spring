@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { 
-  IoArrowBackOutline, 
   IoStar, 
   IoCartOutline, 
   IoHeartOutline, 
@@ -28,6 +27,7 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   // Memoize the product lookup to avoid using state and useEffect for initialization
   const product = useMemo(() => PRODUCTS.find(p => p.id === params.id), [params.id]);
@@ -56,6 +56,11 @@ export default function ProductPage() {
   );
 
   const isWishlisted = wishlist.some(item => item.id === product.id);
+  const availableImages = Array.isArray(product.images)
+    ? [...new Set(product.images.filter(image => typeof image === 'string' && image.length > 0))]
+    : [];
+  const productImages = availableImages.length > 0 ? availableImages : [product.image];
+  const selectedImageIndex = Math.min(activeImage, productImages.length - 1);
   const discount = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) 
     : 0;
@@ -82,7 +87,7 @@ export default function ProductPage() {
           <div className={styles.imageSection}>
             <motion.div 
               className={styles.mainImage}
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={shouldReduceMotion ? false : { scale: .98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
             >
@@ -90,32 +95,37 @@ export default function ProductPage() {
                 <span className={styles.discountBadge}>-{discount}%</span>
               )}
               <Image 
-                src={product.image} 
+                src={productImages[selectedImageIndex]}
                 alt={product.name} 
                 fill 
-                priority
+                preload
+                sizes="(max-width: 768px) 100vw, 45vw"
                 style={{ objectFit: 'contain' }}
               />
             </motion.div>
             
             <div className={styles.thumbnails}>
-              {[...Array(4)].map((_, i) => (
-                <div 
-                  key={`thumb-${i}`} 
-                  className={`${styles.thumbnail} ${activeImage === i ? styles.activeThumbnail : ''}`}
+              {productImages.map((image, i) => (
+                <button
+                  key={image}
+                  className={`${styles.thumbnail} ${selectedImageIndex === i ? styles.activeThumbnail : ''}`}
                   onClick={() => setActiveImage(i)}
+                  type="button"
+                  aria-label={productImages.length === 1 ? `View ${product.name} product image` : `View ${product.name}, image ${i + 1} of ${productImages.length}`}
+                  aria-pressed={selectedImageIndex === i}
                 >
-                  <Image src={product.image} alt={product.name} width={80} height={80} style={{ objectFit: 'contain' }} />
-                </div>
+                  <Image src={image} alt="" width={80} height={80} style={{ objectFit: 'contain' }} />
+                </button>
               ))}
+              <span className={styles.galleryCaption}>{product.size} / {product.category}</span>
             </div>
           </div>
 
           {/* Info Section */}
           <motion.div 
             className={styles.infoSection}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={shouldReduceMotion ? false : { y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
             <span className={styles.category}>{product.category}</span>
@@ -124,7 +134,7 @@ export default function ProductPage() {
             <div className={styles.rating}>
               <div className={styles.stars}>
                 {[...Array(5)].map((_, i) => (
-                  <IoStar key={`star-${i}`} color={i < Math.floor(product.rating) ? '#f1c40f' : '#e0e0e0'} />
+                  <IoStar key={`star-${i}`} className={i < Math.floor(product.rating) ? undefined : styles.emptyStar} aria-hidden="true" />
                 ))}
               </div>
               <span className={styles.reviews}>{product.rating} / 5 ({product.reviews} reviews)</span>
@@ -192,6 +202,7 @@ export default function ProductPage() {
                 className={`${styles.wishlistBtn} ${isWishlisted ? styles.wishlisted : ''}`}
                 onClick={() => toggleWishlist(product)}
                 aria-label="Toggle wishlist"
+                aria-pressed={isWishlisted}
               >
                 {isWishlisted ? <IoHeart /> : <IoHeartOutline />}
               </button>

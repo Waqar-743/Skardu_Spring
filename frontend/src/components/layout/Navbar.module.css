@@ -357,6 +357,135 @@
   padding: 1rem 3rem;
 }
 
+/* -- Home / story variant --
+   Transparent and tinted by --ink, which the story stage animates per chapter.
+   Once the pinned story is behind us (html[data-story='after']) it becomes a
+   dark glass bar so it stays legible over any section. */
+.navStory {
+  --nav-ink: var(--ink, #ffffff);
+  background: transparent;
+}
+
+/* The glass lives on a pseudo-element: backdrop-filter on the nav itself would
+   become the containing block of the fixed-position mobile menu. */
+.navStory::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(3, 6, 18, 0.78);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid rgba(236, 243, 255, 0.08);
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+:global(html[data-story='after']) .navStory {
+  --nav-ink: #ecf3ff;
+}
+
+:global(html[data-story='after']) .navStory::before {
+  opacity: 1;
+}
+
+.navStory .logoName,
+.navStory .logoTagline,
+.navStory .navLink,
+.navStory .cartBtn,
+.navStory .moonIcon,
+.navStory .sunIcon {
+  color: var(--nav-ink);
+}
+
+.navStory .logoName {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.navStory .logoTagline {
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.navStory .logoIcon {
+  background: transparent;
+  border: 1px solid var(--nav-ink);
+  color: var(--nav-ink);
+  box-shadow: none;
+}
+
+.navStory .navLink {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.navStory .navLink::after {
+  height: 1px;
+  background: var(--nav-ink);
+}
+
+.navStory .navLink:hover,
+.navStory .cartBtn:hover {
+  color: var(--nav-ink);
+  opacity: 0.7;
+}
+
+.navStory .themeToggle {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--nav-ink) 35%, transparent);
+}
+
+.navStory .navCta {
+  background: transparent;
+  color: var(--nav-ink);
+  border: 1px solid var(--nav-ink);
+  box-shadow: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.navStory .navCta:hover {
+  background: #17332f;
+  color: #f5f0e4;
+  box-shadow: none;
+}
+
+.navStory .cartBadge {
+  border-color: transparent;
+}
+
+.navStory .toggleBar {
+  background: var(--nav-ink);
+}
+
+/* The mobile menu is a white panel, so it keeps dark text. */
+.navStory .mobileMenu .navLink {
+  color: var(--color-deep-blue);
+  font-size: var(--text-2xl);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.navStory .mobileMenu .navCta {
+  color: var(--color-deep-blue);
+  border-color: var(--color-deep-blue);
+}
+
+.navStory .mobileMenu .navCta:hover {
+  background: #17332f;
+  color: #f5f0e4;
+}
+
+.navStory .toggleOpen .toggleBar {
+  background: var(--color-deep-blue);
+}
+
 /* -- Responsive -- */
 @media (max-width: 1024px) {
   .navLinks {
@@ -372,4 +501,50 @@
   .mobileToggle {
     display: flex;
   }
+}
+.navStory { --nav-ink: var(--ink, #17332f); }
+.logoIcon svg { width: 32px; height: 34px; }
+.navStory .logoIcon { border: 0; width: 38px; height: 40px; font-size: 27px; }
+.navStory .logoIcon svg { width: 38px; height: 40px; }
+.navStory .logoName { font-size: 25px; }
+.navStory .logoTagline { font-size: 7px; letter-spacing: .2em; }
+.navStory .navLinks { gap: 32px; }
+.navStory .navCta { border-radius: 0; padding: 11px 22px; font-size: 9px; }
+:global(html[data-story='after']) .navStory::before { background: rgba(25,59,52,.94); }
+.menuIsOpen .logoName, .menuIsOpen .logoTagline, .menuIsOpen .logoIcon { color: #17332f; }
+
+/* One navigation system across every storefront route. */
+.navbar { padding-inline: clamp(22px, 4vw, 64px); }
+.navInner { max-width: 1440px; }
+.navbar:not(.navStory) { background: #f4f1e8f5; border-bottom: 1px solid #193d3520; color: #193d35; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.navbar:not(.navStory) .logoName, .navbar:not(.navStory) .logoTagline, .navbar:not(.navStory) .navLink, .navbar:not(.navStory) .cartBtn, .navbar:not(.navStory) .mobileToggle { color: #193d35; }
+.navbar:not(.navStory) .logoIcon { width: 38px; height: 40px; background: none; color: #193d35; border: 0; box-shadow: none; }
+.logoIcon svg { width: 38px; height: 40px; }
+.logoName { font-size: 25px; font-weight: 500; letter-spacing: -.01em; }
+.logoTagline { font-size: 7px; font-weight: 500; letter-spacing: .2em; }
+.navLinks, .navStory .navLinks { gap: clamp(18px, 2vw, 32px); }
+.navLink { font-size: 10px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+.navLink::after { height: 1px; background: currentColor; }
+.navbar:not(.navStory) .navCta { color: #193d35; background: none; border: 1px solid #193d35; box-shadow: none; }
+.navCta { min-height: 44px; border-radius: 0; padding: 11px 22px; font-size: 9px; letter-spacing: .14em; }
+.navbar:not(.navStory) .navCta:hover { background: #193d35; color: #f4f1e8; }
+.navbar .cartBtn, .navbar .themeToggle { min-width: 44px; min-height: 44px; justify-content: center; }
+.navbar:not(.navStory) .moonIcon, .navbar:not(.navStory) .sunIcon { color: #193d35; }
+.navStory .moonIcon, .navStory .sunIcon { color: var(--nav-ink); }
+.cartBadge { background: #537c6c; color: #faf8f2; }
+.navbar:not(.navStory) .toggleBar { background: #193d35; }
+.mobileMenu { background: #f4f1e8; }
+.mobileMenu .navLink, .navStory .mobileMenu .navLink { font-family: var(--font-heading); font-size: 34px; line-height: 1.2; font-weight: 400; letter-spacing: -.02em; text-transform: none; }
+.mobileMenu .navCta { color: #193d35; border-color: #193d35; }
+@media (max-width: 1050px) { .navLinks { display: none; } .mobileToggle { display: flex; } }
+
+.navbar a:focus-visible,
+.navbar button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar, .navbar *, .navbar *::before, .navbar *::after { transition: none; }
+  .navCta:hover, .cartBtn:hover, .logo:hover .logoIcon { transform: none; }
 }

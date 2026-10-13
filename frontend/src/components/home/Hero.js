@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useMemo, useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { IoWaterOutline } from 'react-icons/io5';

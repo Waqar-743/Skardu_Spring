@@ -4,26 +4,33 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoChatbubbleEllipsesOutline, IoCloseOutline, IoSend, IoWaterOutline, IoSparklesSharp } from 'react-icons/io5';
 import styles from './Assistant.module.css';
+import { hasServerAPI, apiPath } from '@/lib/deployment';
 
 const QUICK_REPLIES = [
   { id: 'pricing', label: 'Check Pricing', query: 'What are the current prices for Skardu Spring water?' },
   { id: 'source', label: 'Water Source', query: 'Where does Skardu Spring water come from?' },
   { id: 'delivery', label: 'Delivery Info', query: 'How does your delivery system work?' },
-  { id: 'quality', label: 'Certifications', query: 'Is your water certified? Tell me about its quality.' },
+  { id: 'quality', label: 'Product documents', query: 'How can I request certification or test documents for a product?' },
 ];
 
 export default function Assistant() {
   const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { id: 'initial-1', role: 'bot', content: 'Hello! I am your Skardu Intelligent Assistant. How can I help you experience purity today?' }
+    { id: 'initial-1', role: 'bot', content: 'Welcome to Skardu Spring. I can help with products, prices, delivery and ordering.' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const messageCounter = useRef(0);
+
+  const nextId = (prefix) => {
+    messageCounter.current += 1;
+    return `${prefix}-${messageCounter.current}`;
+  };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'nearest' });
   };
 
   useEffect(() => {
@@ -34,18 +41,25 @@ export default function Assistant() {
     if (isMounted) scrollToBottom();
   }, [messages, isTyping, isMounted]);
 
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const closeWithEscape = (event) => { if (event.key === 'Escape') setIsOpen(false); };
+    window.addEventListener('keydown', closeWithEscape);
+    return () => window.removeEventListener('keydown', closeWithEscape);
+  }, [isOpen]);
+
   const handleSend = async (text) => {
     const messageText = text || inputValue;
     if (!messageText.trim()) return;
 
     // Add user message with a unique ID generated at call time
-    const userMessage = { id: `msg-${Math.random().toString(36).substr(2, 9)}`, role: 'user', content: messageText };
+    const userMessage = { id: nextId('msg'), role: 'user', content: messageText };
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(apiPath('chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -57,20 +71,20 @@ export default function Assistant() {
       const data = await response.json();
       
       if (data.response) {
-        setMessages(prev => [...prev, { id: `bot-${Math.random().toString(36).substr(2, 9)}`, role: 'bot', content: data.response }]);
+        setMessages(prev => [...prev, { id: nextId('bot'), role: 'bot', content: data.response }]);
       } else if (data.error) {
-        setMessages(prev => [...prev, { id: `err-${Math.random().toString(36).substr(2, 9)}`, role: 'bot', content: data.error }]);
+        setMessages(prev => [...prev, { id: nextId('err'), role: 'bot', content: data.error }]);
       } else {
-        setMessages(prev => [...prev, { id: `fallback-${Math.random().toString(36).substr(2, 9)}`, role: 'bot', content: 'I am currently having a little trouble connecting, but you can explore all our products directly on our Shop page!' }]);
+        setMessages(prev => [...prev, { id: nextId('fallback'), role: 'bot', content: 'I am currently having a little trouble connecting, but you can explore all our products directly on our Shop page!' }]);
       }
     } catch (error) {
-      setMessages(prev => [...prev, { id: `catch-${Math.random().toString(36).substr(2, 9)}`, role: 'bot', content: 'I am currently having a little trouble connecting, but you can explore all our products directly on our Shop page!' }]);
+      setMessages(prev => [...prev, { id: nextId('catch'), role: 'bot', content: 'I am currently having a little trouble connecting, but you can explore all our products directly on our Shop page!' }]);
     } finally {
       setIsTyping(false);
     }
   };
 
-  if (!isMounted) return null;
+  if (!isMounted || !hasServerAPI) return null;
 
   return (
     <div className={styles.assistantWrapper}>
@@ -80,7 +94,9 @@ export default function Assistant() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="Open Assistant"
+        aria-label={isOpen ? 'Close Assistant' : 'Open Assistant'}
+        aria-expanded={isOpen}
+        aria-controls="skardu-assistant"
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -110,6 +126,9 @@ export default function Assistant() {
         {isOpen && (
           <motion.div
             className={styles.chatWindow}
+            id="skardu-assistant"
+            role="region"
+            aria-label="Skardu shopping assistant"
             initial={false}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -133,7 +152,7 @@ export default function Assistant() {
             </div>
 
             {/* Messages Area */}
-            <div className={styles.messagesArea}>
+            <div className={styles.messagesArea} role="log" aria-live="polite" aria-label="Conversation">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -176,10 +195,11 @@ export default function Assistant() {
               <input
                 type="text"
                 placeholder="Ask me anything..."
+                aria-label="Message to Skardu Assistant"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
-              <button type="submit" disabled={!inputValue.trim() || isTyping}>
+              <button type="submit" aria-label="Send message" disabled={!inputValue.trim() || isTyping}>
                 <IoSend />
               </button>
             </form>

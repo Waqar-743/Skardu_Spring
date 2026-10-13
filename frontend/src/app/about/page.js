@@ -1,8 +1,9 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { motion } from 'framer-motion';
-import { IoDiamondOutline, IoGlobeOutline, IoShieldCheckmarkOutline, IoHeartOutline } from 'react-icons/io5';
+import { IoLeafOutline, IoGlobeOutline, IoConstructOutline, IoHeartOutline } from 'react-icons/io5';
+import { SOURCES } from '@/components/story/storyData';
 import styles from './About.module.css';
 
 export default function AboutPage() {
@@ -10,13 +11,14 @@ export default function AboutPage() {
     <div className={styles.aboutWrapper}>
       {/* Hero */}
       <section className={styles.hero}>
-        <Image 
+        <div className={styles.heroMedia}><Image 
           src="/images/climber-peak.png" 
-          alt="Skardu Peaks" 
+          alt="A climber holding a Skardu Spring bottle in a mountain scene" 
           fill 
           priority
+          sizes="(max-width: 767px) 100vw, 48vw"
           className={styles.heroImg}
-        />
+        /></div>
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <motion.span 
@@ -24,7 +26,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Since 10,000 BC
+            Inspired by Baltistan
           </motion.span>
           <motion.h1 
             className={styles.title}
@@ -40,8 +42,8 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Our story is etched in the ice and rock of the Karakoram. 
-            A journey of patience, time, and absolute natural perfection.
+            Skardu Spring takes its inspiration from Baltistan’s mountains,
+            river valleys and living heritage. A place to discover, and a story to share.
           </motion.p>
         </div>
       </section>
@@ -51,18 +53,19 @@ export default function AboutPage() {
         <div className={styles.container}>
           <div className={styles.grid}>
             <div className={styles.textSide}>
-              <h2 className={styles.sectionTitle}>Where Time Stands <span>Still</span></h2>
+              <h2 className={styles.sectionTitle}>A place, and <span>its people.</span></h2>
               <p>
-                The story of Skardu Spring begins 10,000 years ago. While civilizations rose and fell, 
-                the pristine snow of the Karakoram glaciers was undergoing a silent transformation. 
-                Naturally filtered through deep layers of mineral-rich rock, our water has been 
-                maturing in a protected sanctuary, far from the reach of the modern world.
+                Skardu sits among mountains, lakes and the Indus valley. Balti is the area’s
+                native language, and its history reflects connections with South Asia,
+                Central Asia and Tibet.
               </p>
               <p>
-                We founded Skardu Spring with a simple mission: to share this geological masterpiece 
-                with the world while preserving the sanctity of its source. We don&apos;t just bottle water; 
-                we bottle heritage.
+                That wider story guides the way we introduce Skardu Spring: through the
+                landscape, local craftsmanship and the moments people share around a table.
+                Explore the collection, and contact us when you need product or quality
+                information before ordering.
               </p>
+              <a href={SOURCES[0].href} target="_blank" rel="noopener noreferrer" className={styles.textLink}>Read about Skardu <span aria-hidden="true">↗</span></a>
             </div>
             <div className={styles.visualSide}>
               <div className={styles.imageBox}>
@@ -84,24 +87,25 @@ export default function AboutPage() {
         <div className={styles.container}>
           <div className={styles.valuesGrid}>
             <div className={styles.valueCard}>
-              <IoDiamondOutline />
-              <h3>Unmatched Purity</h3>
-              <p>Naturally alkaline and enriched with essential minerals through centuries of geological filtration.</p>
+              <IoLeafOutline />
+              <h3>Landscape</h3>
+              <p>Peaks, valleys and lakes set the scene for the Skardu story.</p>
             </div>
             <div className={styles.valueCard}>
               <IoGlobeOutline />
-              <h3>Sustainability</h3>
-              <p>We are committed to preserving the Karakoram ecosystem through zero-impact sourcing and 100% recyclable packaging.</p>
+              <h3>Living heritage</h3>
+              <p>Balti language and local traditions give the region an identity that extends beyond its scenery.</p>
             </div>
             <div className={styles.valueCard}>
-              <IoShieldCheckmarkOutline />
-              <h3>Excellence</h3>
-              <p>Every batch is tested to international WHO and ISO standards to ensure the highest quality hydration.</p>
+              <IoConstructOutline />
+              <h3>Craftsmanship</h3>
+              <p>The conservation of Shigar Fort helped bring local building techniques and wood carving back into use.</p>
+              <a href={SOURCES[3].href} target="_blank" rel="noopener noreferrer" className={styles.textLink}>Explore the craft story <span aria-hidden="true">↗</span></a>
             </div>
             <div className={styles.valueCard}>
               <IoHeartOutline />
-              <h3>Community</h3>
-              <p>We support the local communities of Skardu, investing in education and clean water initiatives for the people of the peaks.</p>
+              <h3>Shared moments</h3>
+              <p>A glass of water, a meal and a conversation: an invitation to slow down and make room for one another.</p>
             </div>
           </div>
         </div>

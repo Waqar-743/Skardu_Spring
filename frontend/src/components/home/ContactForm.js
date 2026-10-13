@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { IoSendOutline, IoMailOutline, IoPersonOutline, IoChatbubbleOutline } from 'react-icons/io5';
 import styles from './ContactForm.module.css';
+import { hasServerAPI, apiPath } from '@/lib/deployment';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -21,10 +22,16 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!hasServerAPI) {
+      const subject = encodeURIComponent(formData.subject || 'Skardu Spring enquiry');
+      const body = encodeURIComponent(`${formData.message}\n\nFrom: ${formData.name}\nEmail: ${formData.email}`);
+      window.location.href = `mailto:info@skarduspring.com?subject=${subject}&body=${body}`;
+      return;
+    }
     setStatus('loading');
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiPath('contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -143,8 +150,9 @@ export default function ContactForm() {
               >
                 {status === 'loading' ? 'Sending...' : 
                  status === 'success' ? 'Message Sent!' : 
-                 status === 'error' ? 'Try Again' : 'Send Message'}
+                 status === 'error' ? 'Try Again' : hasServerAPI ? 'Send Message' : 'Open email draft'}
               </button>
+              {!hasServerAPI && <p>Your email app will open a draft for you to review and send.</p>}
             </motion.form>
           </div>
         </div>

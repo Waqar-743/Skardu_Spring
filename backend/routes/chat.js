@@ -2,9 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { OpenAI } = require('openai');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+// Created lazily so the server can boot without OPENAI_API_KEY set.
+let openaiClient;
+const getOpenAI = () => {
+  if (!openaiClient) {
+    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return openaiClient;
+};
 
 const SYSTEM_PROMPT = `You are a helpful assistant for Skardu Organic website. 
 Your goal is to provide luxury-level customer service and expert knowledge about our products.
@@ -57,7 +62,7 @@ router.post('/', async (req, res, next) => {
       { role: "user", content: message }
     ];
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: openAiMessages,
       temperature: 0.7,

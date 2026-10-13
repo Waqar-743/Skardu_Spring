@@ -1,175 +1,42 @@
-.sourceWrapper {
-  min-height: 100vh;
-}
-
-.hero {
-  position: relative;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  overflow: hidden;
-}
-
-.heroImg {
-  object-fit: cover;
-  z-index: -2;
-}
-
-.heroOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(10, 46, 92, 0.4), rgba(10, 46, 92, 0.8));
-  z-index: -1;
-}
-
-.heroContent {
-  max-width: 900px;
-  padding: 0 20px;
-}
-
-.label {
-  display: inline-block;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: #60a5fa;
-  margin-bottom: 20px;
-}
-
-.title {
-  font-size: clamp(3rem, 8vw, 5rem);
-  margin-bottom: 30px;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.title span {
-  background: linear-gradient(135deg, #60a5fa 0%, #ffffff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.desc {
-  font-size: 1.4rem;
-  max-width: 700px;
-  margin: 0 auto;
-  opacity: 0.9;
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.story {
-  padding: 120px 0;
-  background: white;
-}
-
-.storyGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.sectionTitle {
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: #1e293b;
-  margin-bottom: 30px;
-}
-
-.sectionTitle span {
-  color: #0072ff;
-}
-
-.textContent p {
-  font-size: 1.1rem;
-  color: #64748b;
-  line-height: 1.8;
-  margin-bottom: 20px;
-}
-
-.imageWrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4/5;
-  border-radius: 32px;
-  overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-}
-
-.milestones {
-  padding: 100px 0;
-  background: #f8fafc;
-}
-
-.milestoneGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-}
-
-.milestoneCard {
-  background: white;
-  padding: 40px;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-  text-align: center;
-}
-
-.milestoneIcon {
-  font-size: 2.5rem;
-  color: #0072ff;
-  margin-bottom: 25px;
-}
-
-.milestoneCard h3 {
-  font-size: 1.3rem;
-  color: #1e293b;
-  margin-bottom: 15px;
-}
-
-.milestoneCard p {
-  color: #64748b;
-  line-height: 1.6;
-}
-
-.altitude {
-  padding: 150px 20px;
-  background: linear-gradient(to bottom, #f8fafc, #ffffff);
-  text-align: center;
-}
-
-.altitudeContent {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.altitudeContent p {
-  font-size: 1.2rem;
-  color: #64748b;
-  line-height: 1.8;
-}
-
-@media (max-width: 992px) {
-  .storyGrid {
-    grid-template-columns: 1fr;
-    gap: 60px;
-    text-align: center;
-  }
-  .imageWrapper {
-    max-width: 500px;
-    margin: 0 auto;
-  }
+.sourceWrapper { min-height: 100dvh; background: var(--bg-page); color: var(--text-main); }
+.hero { position: relative; min-height: 640px; padding: calc(var(--nav-height) + 76px) 0 88px; display: flex; align-items: center; overflow: hidden; background: var(--bg-page); }
+.heroMedia { position: absolute; inset: 0 0 0 auto; width: 48%; }
+.heroImg { object-fit: cover; object-position: center; }
+.heroOverlay { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg-page) 0%, var(--bg-page) 44%, rgba(244, 241, 232, .65) 60%, rgba(244, 241, 232, .12) 100%); pointer-events: none; }
+.heroContent, .container { width: calc(100% - clamp(40px, 8vw, 128px)); max-width: 1120px; margin: 0 auto; }
+.heroContent { position: relative; z-index: 1; }
+.label { display: block; font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-heading); text-transform: uppercase; letter-spacing: .2em; margin-bottom: 28px; }
+.title { max-width: 58%; font-family: var(--font-heading); font-size: clamp(56px, 7.2vw, 104px); font-weight: 500; letter-spacing: -.04em; line-height: .98; color: var(--text-heading); margin-bottom: 28px; text-wrap: balance; }
+.title span, .sectionTitle span { font-style: italic; }
+.desc { max-width: 46ch; width: 48%; font-size: 15px; color: var(--text-main); line-height: 1.9; text-wrap: pretty; }
+.story { padding: clamp(80px, 10vw, 144px) 0; }
+.storyGrid { display: grid; grid-template-columns: 1.12fr .88fr; gap: clamp(48px, 8vw, 112px); align-items: center; }
+.sectionTitle { font-family: var(--font-heading); font-size: clamp(40px, 4.8vw, 68px); font-weight: 500; letter-spacing: -.035em; line-height: 1.04; color: var(--text-heading); margin-bottom: 30px; text-wrap: balance; }
+.textContent p { max-width: 58ch; font-size: 15px; color: var(--text-main); line-height: 1.95; margin-bottom: 22px; text-wrap: pretty; }
+.imageWrapper { position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: var(--bg-card); }
+.milestones { padding: 0 0 clamp(80px, 10vw, 128px); }
+.milestoneGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 72px; }
+.milestoneCard { display: grid; grid-template-columns: 36px 1fr; column-gap: 20px; padding: 36px 0 40px; border-top: 1px solid rgba(25, 61, 53, .2); align-content: start; }
+.milestoneIcon { font-size: 25px; color: var(--text-heading); grid-row: span 2; padding-top: 4px; }
+.milestoneCard h3 { font-family: var(--font-heading); font-size: 34px; font-weight: 500; letter-spacing: -.02em; color: var(--text-heading); margin-bottom: 14px; }
+.milestoneCard p { max-width: 48ch; color: var(--text-muted); font-size: 14px; line-height: 1.9; }
+.altitude { padding: clamp(72px, 9vw, 128px) 24px; background: var(--bg-card); text-align: center; }
+.altitudeContent { max-width: 740px; margin: 0 auto; }
+.altitudeContent p { max-width: 62ch; margin: 0 auto; font-size: 15px; color: var(--text-main); line-height: 1.95; }
+.textLink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text-heading); font-family: var(--font-body); font-size: 12px; border-bottom: 1px solid rgba(25, 61, 53, .35); }
+.textLink:hover { color: var(--color-royal-blue); border-color: currentColor; }
+.textLink:focus-visible { outline: 2px solid var(--text-heading); outline-offset: 4px; }
+.sourceActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 32px; margin-top: 24px; }
+@media (max-width: 767px) {
+  .hero { min-height: 0; padding: calc(var(--nav-height) + 48px) 0 0; flex-direction: column; align-items: stretch; }
+  .heroContent { order: 1; }
+  .heroMedia { position: relative; inset: auto; order: 2; width: 100%; aspect-ratio: 4 / 3; margin-top: 40px; }
+  .heroOverlay { display: none; }
+  .title { max-width: 100%; font-size: clamp(54px, 12vw, 76px); }
+  .desc { width: 100%; }
+  .label { font-size: 10px; margin-bottom: 22px; }
+  .storyGrid { grid-template-columns: 1fr; gap: 40px; }
+  .imageWrapper { max-width: 440px; margin: 0 auto; }
+  .milestoneGrid { grid-template-columns: 1fr; }
+  .milestoneCard { grid-template-columns: 28px 1fr; gap: 16px; }
 }

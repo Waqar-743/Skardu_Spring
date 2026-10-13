@@ -1,107 +1,26 @@
-/* ===================================================
-   LEGAL PAGES — Privacy Policy & Terms
-   =================================================== */
-
-.legalPage {
-  min-height: 100vh;
-  background: var(--color-ice-white);
+.legalPage { min-height: 100dvh; background: var(--bg-page); color: var(--text-main); }
+.hero { padding: calc(var(--nav-height) + 76px) 0 72px; border-bottom: 1px solid rgba(25, 61, 53, .2); }
+.heroContent, .container { width: calc(100% - clamp(40px, 8vw, 128px)); max-width: 1120px; margin: 0 auto; }
+.label { display: block; font-family: var(--font-body); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; color: var(--text-heading); margin-bottom: 28px; }
+.hero h1 { font-family: var(--font-heading); font-size: clamp(54px, 7.2vw, 100px); font-weight: 500; letter-spacing: -.04em; line-height: 1.02; color: var(--text-heading); margin-bottom: 24px; text-wrap: balance; }
+.hero p { color: var(--text-muted); font-size: 12px; }
+.content { padding: 72px 0 112px; }
+.section { max-width: 780px; margin-bottom: 44px; padding-bottom: 44px; border-bottom: 1px solid rgba(25, 61, 53, .16); }
+.section:last-child { margin-bottom: 0; border-bottom: 0; padding-bottom: 0; }
+.section h2 { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 36px); font-weight: 500; letter-spacing: -.025em; color: var(--text-heading); margin-bottom: 24px; line-height: 1.2; }
+.section p, .section li { max-width: 66ch; font-size: 15px; color: var(--text-main); line-height: 1.95; text-wrap: pretty; }
+.section p { margin-bottom: 16px; }
+.section ul { padding-left: 20px; margin-bottom: 16px; }
+.section li { list-style: disc; padding-left: 5px; margin-bottom: 10px; }
+.section strong { font-weight: 600; }
+.section a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text-heading); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(25, 61, 53, .35); transition: color .2s ease; }
+.section a:hover { color: var(--color-royal-blue); text-decoration-color: currentColor; }
+.section a:focus-visible { outline: 2px solid var(--text-heading); outline-offset: 4px; }
+@media (max-width: 767px) {
+  .hero { padding: calc(var(--nav-height) + 48px) 0 48px; }
+  .label { font-size: 10px; margin-bottom: 22px; }
+  .content { padding: 48px 0 80px; }
+  .section { margin-bottom: 36px; padding-bottom: 36px; }
+  .section p, .section li { font-size: 14px; }
 }
-
-/* -- Hero -- */
-.hero {
-  padding: calc(var(--nav-height) + 60px) 0 50px;
-  background: linear-gradient(135deg, var(--color-deep-blue) 0%, var(--color-navy) 50%, var(--color-royal-blue) 100%);
-  text-align: center;
-  position: relative;
-}
-
-.heroContent {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
-  position: relative;
-  z-index: 1;
-}
-
-.label {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--color-glacier-mint);
-  margin-bottom: var(--space-md);
-  padding: 5px 16px;
-  border: 1px solid rgba(168, 230, 207, 0.3);
-  border-radius: var(--radius-full);
-}
-
-.hero h1 {
-  font-size: var(--text-4xl);
-  color: var(--color-pure-white);
-  margin-bottom: var(--space-sm);
-}
-
-.hero p {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: var(--text-sm);
-}
-
-/* -- Content -- */
-.content {
-  padding: var(--space-4xl) 0;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
-}
-
-.section {
-  margin-bottom: var(--space-3xl);
-}
-
-.section h2 {
-  font-size: var(--text-xl);
-  color: var(--color-deep-blue);
-  margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-sm);
-  border-bottom: 2px solid rgba(91, 184, 232, 0.15);
-}
-
-.section p {
-  font-size: var(--text-base);
-  color: var(--color-mountain-stone);
-  line-height: 1.8;
-  margin-bottom: var(--space-md);
-}
-
-.section ul {
-  padding-left: var(--space-xl);
-  margin-bottom: var(--space-md);
-}
-
-.section li {
-  list-style: disc;
-  font-size: var(--text-base);
-  color: var(--color-mountain-stone);
-  line-height: 1.8;
-  margin-bottom: var(--space-sm);
-}
-
-.section a {
-  color: var(--color-royal-blue);
-  font-weight: 500;
-}
-
-.section a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: var(--text-3xl);
-  }
-}
+@media (prefers-reduced-motion: reduce) { .section a { transition: none; } }

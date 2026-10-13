@@ -1,0 +1,34 @@
+{
+  "method": "Built-in image_gen",
+  "date": "2026-10-11",
+  "assets": [
+    {
+      "key": "karakoram",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 cinematic photographic background for the Skardu Spring website. An expansive Karakoram valley in Baltistan, northern Pakistan at first light: rugged tall angular granite mountains, snowfields at upper elevations, a blue glacial river meandering across the broad valley floor, pale peach morning sky, natural grey moraine. Camera looking into the valley, subtle haze, understated editorial landscape photography with fine film grain, desaturated ice blue and warm ivory palette. Dramatic landscape in bottom two-thirds, generous calm sky, no close foreground subjects. Faithful regional geology, no exaggerated fantasy peaks, no tropical vegetation, no houses or people, no text, no logos. Generated artistic interpretation of the region, not a claimed precise location."
+    },
+    {
+      "key": "indus",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 editorial landscape photograph for an Indus valley story chapter. Broad silvery turquoise Indus river winding through the arid Skardu valley, Baltistan in northern Pakistan, grey-brown granite mountains, layered terraced banks, poplar groves on cultivated patches, soft afternoon sunlight. View from a hillside looking across the river, restrained colours, pale sky, authentic cold mountain desert landscape. Beautiful documentary-like texture, natural and quiet, no oversized snow peaks filling the river, no tropical vegetation, no text or logos. Regional artistic interpretation."
+    },
+    {
+      "key": "heritage",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 image for a researched Baltistan heritage story. Architectural editorial photograph of a traditional Balti stone and timber fort-palace courtyard inspired by seventeenth-century Shigar vernacular construction in northern Pakistan. Low multi-storey stone masonry, warm aged carved cedar timber galleries and lattice windows, massive natural boulder incorporated into the foundation, rugged mountains visible beyond, shaded courtyard, late golden light. Honest traditional materials, vernacular regional scale, extremely detailed wood and stone. No fantasy European castle, no minarets, no religious figures, no invented historical people, no signage, no text, no logos. A clearly artistic regional reconstruction rather than exact documentary evidence."
+    },
+    {
+      "key": "orchard",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 photographic chapter background for Skardu Spring. A quiet apricot orchard in spring inspired by Chunda valley above Skardu in Baltistan, northern Pakistan. Delicate pale pink-white apricot blossoms on natural knotted branches in foreground, terraced fields and low traditional stone houses across middle distance, arid towering granite mountain backdrop under pale clear spring sky. Quiet natural morning light, gentle editorial film photography, muted sage leaves, dusty pink flowers, ivory and grey mountains. Local believable landscape, no Japanese temple, no fantasy village, no generic Alpine chalet, no text or logo. An artistic regional interpretation."
+    },
+    {
+      "key": "table",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide 16:9 lifestyle image for Skardu Spring final chapter. Editorial still life of a simple shared outdoor table on a stone courtyard terrace in Baltistan, northern Pakistan, with rugged mountain valley softly visible beyond. Warm linen tablecloth, two handmade unglazed ceramic cups, a low bowl of golden fresh apricots, simple bread, a clear carafe of water, small wooden spoon. No branded bottles because a bottle will be composited by code, no people. Natural late afternoon shadows, intimate authentic hospitality, understated textures, warm ivory against deep sage-green shadows, photography for an independent travel journal. No cutlery extravagance, no luxurious Western hotel, no text, logos or watermarks. Artistic regional interpretation."
+    },
+    {
+      "key": "stone-prop",
+      "prompt": "Use case: product-mockup. Asset type: transparent foreground parallax prop for an editorial mountain-water website. One beautiful smooth flat irregular oval grey-green river stone, with fine subtle white mineral veins and tiny natural speckles. Three-quarter oblique angle as if floating in space, photoreal high-detail texture with gentle side lighting, very subtle edge highlights. Single isolated object centred in a square canvas with 15 percent transparent margin all sides. Genuine transparent background, no floor, no cast shadow, no other objects, no text. Not a gemstone or jewel."
+    },
+    {
+      "key": "apricot-prop",
+      "prompt": "Use case: photorealistic-natural. Asset type: isolated transparent foreground parallax prop for Skardu Spring orchard chapter. A short delicate natural apricot twig carrying one ripe golden apricot and two soft muted sage-green leaves. Twig diagonally arranged, natural fruit skin texture with faint blush, a tiny pale blossom attached near stem. Elegant editorial macro photography with soft diffuse side lighting. Single small composition centred in square canvas with generous transparent margins. Genuine transparent background, no floor, no cast shadow, no detached additional fruits, no text, logos or watermark."
+    }
+  ]
+}

@@ -1,39 +1,41 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { IoStar, IoCartOutline, IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { useCart } from '@/context/CartContext';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product }) {
   const { addToCart, toggleWishlist, wishlist } = useCart();
+  const shouldReduceMotion = useReducedMotion();
   const isWishlisted = wishlist.some((item) => item.id === product.id);
 
   return (
     <motion.div 
       className={styles.card}
-      initial={{ opacity: 0, y: 20 }}
+      initial={shouldReduceMotion ? false : { y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
     >
       <button 
         className={`${styles.wishlistBtn} ${isWishlisted ? styles.wishlisted : ''}`}
         onClick={() => toggleWishlist(product)}
-        aria-label="Toggle Wishlist"
+        aria-label={`${isWishlisted ? 'Remove' : 'Save'} ${product.name} ${isWishlisted ? 'from' : 'to'} wishlist`}
+        aria-pressed={isWishlisted}
+        type="button"
       >
         {isWishlisted ? <IoHeart /> : <IoHeartOutline />}
       </button>
 
-      <Link href={`/shop/${product.id}`} className={styles.imageWrapper}>
+      <Link href={`/shop/${product.id}`} className={styles.imageWrapper} aria-label={`View ${product.name}`}>
         <Image
           src={product.image}
           alt={product.name}
           fill
           className={styles.image}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 768px) 50vw, (max-width: 1100px) 35vw, 24vw"
         />
       </Link>
 
@@ -46,7 +48,7 @@ export default function ProductCard({ product }) {
         <div className={styles.rating}>
           <div className={styles.stars}>
             {[...Array(5)].map((_, i) => (
-              <IoStar key={i} color={i < Math.floor(product.rating) ? '#f1c40f' : '#e0e0e0'} />
+              <IoStar key={i} className={i < Math.floor(product.rating) ? undefined : styles.emptyStar} aria-hidden="true" />
             ))}
           </div>
           <span className={styles.reviewCount}>({product.reviews} reviews)</span>
@@ -57,7 +59,8 @@ export default function ProductCard({ product }) {
           <button 
             className={styles.addBtn}
             onClick={() => addToCart(product)}
-            aria-label="Add to Cart"
+            aria-label={`Add ${product.name} to cart`}
+            type="button"
           >
             <IoCartOutline />
           </button>
