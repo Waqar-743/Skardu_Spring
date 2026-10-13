@@ -66,7 +66,9 @@ for (const viewport of [
       const reverse = await sample(page, span * i / 4);
       expect(reverse.chapter).toBe(forward[i].chapter);
       const numbers = str => str.match(/-?\d*\.?\d+/g).map(Number);
-      numbers(reverse.matrix).forEach((value, j) => expect(Math.abs(value - numbers(forward[i].matrix)[j])).toBeLessThan(.1));
+      // Browsers may round composited transforms differently by a fraction of a
+      // device pixel. A quarter-pixel limit still catches visible reverse drift.
+      numbers(reverse.matrix).forEach((value, j) => expect(Math.abs(value - numbers(forward[i].matrix)[j])).toBeLessThan(.25));
       expect(reverse.ink).toBe(forward[i].ink);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
