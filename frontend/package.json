@@ -9,6 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:pages": "node scripts/build-pages.mjs",
+    "test:motion": "playwright test",
     "start": "next start",
     "lint": "eslint"
   },
@@ -23,6 +24,7 @@
     "swiper": "^12.1.3"
   },
   "devDependencies": {
+    "@playwright/test": "1.62.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "typescript": "^6.0.3"

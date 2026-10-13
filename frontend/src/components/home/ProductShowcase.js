@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import { HiArrowRight } from 'react-icons/hi';
 import { IoCartOutline } from 'react-icons/io5';
 import { useCart } from '@/context/CartContext';

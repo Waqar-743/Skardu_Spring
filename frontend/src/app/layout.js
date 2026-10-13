@@ -6,6 +6,24 @@ import HashNavigation from '@/components/layout/HashNavigation';
 import Script from 'next/script';
 import { FaWhatsapp } from 'react-icons/fa';
 import dynamic from 'next/dynamic';
+import localFont from 'next/font/local';
+
+const displayFont = localFont({
+  src: [
+    { path: './fonts/cormorant-latin.woff2', weight: '300 700', style: 'normal' },
+    { path: './fonts/cormorant-italic-latin.woff2', weight: '300 700', style: 'italic' },
+  ],
+  variable: '--font-cormorant',
+  display: 'swap',
+  preload: true,
+});
+const bodyFont = localFont({
+  src: './fonts/manrope-latin.woff2',
+  weight: '200 800',
+  variable: '--font-manrope',
+  display: 'swap',
+  preload: true,
+});
 
 const Assistant = dynamic(() => import('@/components/layout/Assistant'));
 
@@ -27,7 +45,7 @@ import ToastContainer from '@/components/shop/Toast';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
       <head>
         <Script id="structured-data" type="application/ld+json">
           {`

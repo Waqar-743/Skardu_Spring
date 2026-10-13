@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import concepts from './concepts.json';
 import variations from './variations.json';
 import refinements from './refinements.json';

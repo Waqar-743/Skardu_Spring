@@ -21,6 +21,14 @@ export default function JourneyMarquee() {
 
     let alive = true;
     const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference) and ((max-height: 699px) or (max-width: 767px))', () => {
+      gsap.utils.toArray('[data-item]', root).forEach((item) => {
+        gsap.fromTo(item.querySelectorAll('[data-body]'), { y: 18, opacity: .78 }, {
+          y: 0, opacity: 1, ease: 'none',
+          scrollTrigger: { trigger: item, start: 'top 92%', end: 'top 55%', scrub: .4 },
+        });
+      });
+    }, root);
     mm.add('(prefers-reduced-motion: no-preference) and (min-height: 700px) and (min-width: 768px)', () => {
       const q = gsap.utils.selector(root);
       const track = q('[data-track]')[0];

@@ -31,6 +31,19 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_PUBLIC_API_ORIGIN: ${{ vars.NEXT_PUBLIC_API_ORIGIN }}
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Verify cinematic motion before publishing
+        run: npm run test:motion --workspace frontend
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+      - name: Save motion diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: motion-test-results
+          path: frontend/test-results
       - uses: actions/upload-pages-artifact@v4
         with:
           path: frontend/.pages-build/out

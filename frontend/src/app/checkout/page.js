@@ -4,7 +4,7 @@ import { publicPath, hasServerAPI, apiPath } from '@/lib/deployment';
 
 import { useState, useEffect } from 'react';
 import Image from '@/components/layout/SiteImage';
-import { useRouter } from 'next/navigation';
+import useSiteRouter from '@/lib/useSiteRouter';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   IoCartOutline,
@@ -45,7 +45,7 @@ const CITIES = [
 ];
 
 export default function CheckoutPage() {
-  const router = useRouter();
+  const router = useSiteRouter();
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, isInitialized } = useCart();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);

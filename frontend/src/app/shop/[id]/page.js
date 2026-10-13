@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import useSiteRouter from '@/lib/useSiteRouter';
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import { motion, useReducedMotion } from 'framer-motion';
 import { 
   IoStar, 
@@ -22,7 +23,7 @@ import styles from './ProductDetail.module.css';
 
 export default function ProductPage() {
   const params = useParams();
-  const router = useRouter();
+  const router = useSiteRouter();
   const { addToCart, toggleWishlist, wishlist } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);

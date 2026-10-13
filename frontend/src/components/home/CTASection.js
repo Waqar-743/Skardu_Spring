@@ -1,7 +1,7 @@
 'use client';
 
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import { HiArrowRight } from 'react-icons/hi';
 import { IoShieldCheckmarkOutline, IoLeafOutline, IoRibbonOutline } from 'react-icons/io5';
 import styles from './CTASection.module.css';

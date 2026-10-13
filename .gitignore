@@ -39,6 +39,8 @@ legacy/
 frontend/data/
 frontend/.shots/
 frontend/.pages-build/
+frontend/test-results/
+frontend/playwright-report/
 brand-review/
 
 # Local browser/video inspection helpers

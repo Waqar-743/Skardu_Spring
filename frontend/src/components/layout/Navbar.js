@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import { usePathname } from 'next/navigation';
 import { IoCartOutline } from 'react-icons/io5';
 import BrandMark from './BrandMark';

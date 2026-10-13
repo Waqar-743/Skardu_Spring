@@ -3,14 +3,14 @@
 import { useRef, useCallback } from 'react';
 import Image from '@/components/layout/SiteImage';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import useSiteRouter from '@/lib/useSiteRouter';
 import { IoClose, IoTrashOutline, IoCartOutline, IoArrowForward } from 'react-icons/io5';
 import { useCart } from '@/context/CartContext';
 import useModalAccessibility from '@/lib/useModalAccessibility';
 import styles from './CartDrawer.module.css';
 
 export default function CartDrawer() {
-  const router = useRouter();
+  const router = useSiteRouter();
   const { cart, removeFromCart, updateQuantity, cartTotal, isCartOpen, setIsCartOpen } = useCart();
   const drawerRef = useRef(null);
   const closeRef = useRef(null);

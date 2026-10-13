@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PRODUCTS from '@/data/products';

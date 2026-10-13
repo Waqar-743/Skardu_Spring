@@ -1,88 +1,69 @@
-# 🌊 Skardu Spring Ecosystem
-> **Absolute Purity. Born from the Heart of the Karakoram.**
+# Skardu Spring
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg?style=for-the-badge)](https://github.com/Waqar-743/Skardu_Spring)
-[![CI Workflow](https://github.com/Waqar-743/Skardu_Spring/actions/workflows/ci.yml/badge.svg)](https://github.com/Waqar-743/Skardu_Spring/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-20-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+Some places stay with you. A river moving through a mountain valley, an orchard coming into blossom, a table where there is always room for one more person.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FWaqar-743%2FSkardu_Spring&root-directory=frontend&env=OPENAI_API_KEY,EMAIL_USER,EMAIL_PASS,ADMIN_EMAIL&project-name=skardu-spring&repository-name=skardu-spring-frontend)
+Skardu Spring takes its inspiration from Baltistan. This website gives visitors a little time with that place before inviting them to explore the water collection. Its story moves through mountains, the Indus, local heritage, apricot orchards and the simple pleasure of sharing a meal.
 
-Live storefront: [waqar-743.github.io/Skardu_Spring](https://waqar-743.github.io/Skardu_Spring/). See [Pages deployment notes](docs/GITHUB_PAGES.md) for build commands and server feature availability.
+[Visit the storefront](https://waqar-743.github.io/Skardu_Spring/)
 
-**Skardu Spring** is a premium, full-stack e-commerce ecosystem delivering the crystalline purity of the Karakoram. Built with Next.js 15, Express, and OpenAI, featuring a high-performance 'Digital Purity' design philosophy.
+## Follow the journey
 
----
+A bottle stays in view while the scenery changes around it. Scroll forward to move through the five chapters, or scroll back to revisit them. The light, lettering, landscape and small foreground details each move at their own pace.
 
-## 🎨 Digital Purity: The Design Philosophy
+Further down the page, field notes introduce the region's living heritage. A timeline connects those stories, and the collection brings the journey back to something familiar: choosing a bottle for the day ahead.
 
-Skardu Spring isn't just a website; it's a digital experience. 
-- **Glacial Motion**: Powered by `framer-motion` for fluid, organic transitions.
-- **Glassmorphism**: A UI that mimics the transparency and depth of ice.
-- **Micro-interactions**: Subtle tactile feedback on every click and hover.
+The cultural scenes use artistic interpretations inspired by Baltistan. Research links and image notes are available on the site. Regional stories provide context; product information and quality documents are presented separately.
 
----
+## Make yourself at home
 
-## 🏗️ Architecture at a Glance
+Visitors can browse products, save favourites, add bottles to their cart and review delivery details. The cart stays with them as they move between pages. Smaller screens use compact compositions and a vertical timeline, while reduced-motion preferences provide a readable version of the complete story.
 
-The ecosystem is architected as a high-performance monorepo:
+The visual language carries through the shop, product pages and supporting pages: warm paper, forest green, generous serif headings and clear, quiet controls.
 
-- **`/frontend`**: Next.js 15+ App Router, optimized for sub-second LCP and premium interactivity.
-- **`/backend`**: Modular Express.js API designed for high concurrency and secure data persistence.
-- **`/logic`**: Advanced service layers for AI Concierge (OpenAI) and automated logistics.
+## Run the website locally
 
-```mermaid
-graph TD
-    User((User)) -->|HTTPS| Frontend[Next.js 15 App]
-    Frontend -->|Framer Motion| UI[Luxury UI]
-    Frontend -->|REST API| Backend[Express.js API]
-    Backend -->|Secure| Auth[JWT/Bcrypt]
-    Backend -->|Persistence| MongoDB[(MongoDB Atlas)]
-    Backend -->|Intelligence| AI[OpenAI GPT-4o]
+Use Node.js 22 and run these commands from the repository root:
+
+```sh
+npm ci
+npm run dev:frontend
 ```
 
+Open the local address printed in the terminal. To check the production build:
 
-## 🚀 Quick Start
-
-### 1. Zero-Config Installation
-```bash
-npm install && npm run install:all
+```sh
+npm run build --workspace frontend
+npm run start --workspace frontend
 ```
 
-### 2. Environment Configuration
-Create a `.env` in both `/frontend` and `/backend` based on provided `.env.example` templates.
+The frontend uses Next.js 16, React 19, GSAP and Motion. Styling lives in CSS Modules and shared theme variables. Fonts and story assets are served with the site.
 
-### 3. Launch Development Mode
-```powershell
-./start-all.ps1
+## Publishing to GitHub Pages
+
+Each push to `main` builds the static storefront, runs the motion checks and publishes the result to GitHub Pages. To create the same export locally:
+
+```sh
+npm run build:pages --workspace frontend
 ```
 
+The exported files are in `frontend/.pages-build/out`. The build uses `/Skardu_Spring/` as the local default; the deployment workflow takes the path from the repository name.
 
+GitHub Pages serves static files. Checkout opens a WhatsApp order-request draft for the shopper to review and send. The team confirms availability, delivery and payment, and the cart remains available until the shopper decides what to do next. Newsletter enquiries use an email link.
 
-## 🛠️ The Tech Stack
+Automatic order processing, email delivery and the assistant need a server deployment. The full Next.js application keeps its API routes, and the repository also includes the Express backend. Deployment options and the optional API origin are documented in [the Pages notes](docs/GITHUB_PAGES.md).
 
-### Frontend Excellence
-- **Core**: Next.js 15, React 19
-- **Motion**: Framer Motion (Liquid animations)
-- **Styling**: Vanilla CSS Modules (Design precision)
-- **Slider**: Swiper.js (Premium carousels)
+## Check the motion
 
-### Backend Robustness
-- **Runtime**: Node.js 20+
-- **Framework**: Express.js (Modular Routing)
-- **Database**: MongoDB / Mongoose (NoSQL)
-- **Auth**: JSON Web Tokens (JWT)
-- **Services**: OpenAI SDK, Nodemailer
+The browser checks cover all five chapters, forward and reverse scrolling, ordinary mouse-wheel scrolling, chapter buttons, editorial movement, the regional timeline, page navigation, cart interactions, viewport changes and reduced motion.
 
----
+```sh
+npx playwright install chromium
+npm run build:pages --workspace frontend
+npm run test:motion --workspace frontend
+```
 
-## 📄 License
+If a motion check fails during deployment, its screenshots and trace are saved with the GitHub Actions run for review.
 
-Distributed under the MIT License. See `LICENSE` for more information.
+## License
 
----
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Made%20with%20%E2%9D%A4%20by-Skardu%20Spring%20Team-0A2E5C?style=for-the-badge" alt="Footer">
-</p>
+This project uses the [MIT License](LICENSE). The bundled fonts retain their accompanying Open Font License files.

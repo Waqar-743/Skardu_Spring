@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from 'react';
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -39,7 +39,7 @@ const STEP = 1.25;
 const CROSSFADE = 0.78;
 const FEATURED = PRODUCTS.find((product) => product.id === 'glacial-reserve-1000');
 
-const BOTTLE_SRC = publicPath('/images/bottle-subject.png');
+const BOTTLE_SRC = publicPath('/images/bottle-subject.webp');
 const BOTTLE_MASK = `url(${BOTTLE_SRC})`;
 /** Excludes the paper label band so the liquid tint never colours the logo. */
 const LIQUID_MASK = `${BOTTLE_MASK}, linear-gradient(to bottom, #000 0, #000 63.5%, transparent 63.5%, transparent 81%, #000 81%, #000 100%)`;
@@ -81,7 +81,8 @@ function Prop({ prop, chapterId, index }) {
           style={{ filter: prop.type === 'star' || prop.type === 'orb' ? undefined : filters.join(' ') }}
         >
           {prop.type === 'stone' || prop.type === 'apricot' ? (
-            <Image src={`/images/story/${prop.type}-prop.png`} alt="" width={600} height={600}
+            <Image src={`/images/story/${prop.type}-prop.webp`} alt="" width={600} height={600}
+              loading="eager" fetchPriority="low"
               className={styles.propImage} sizes="(max-width: 767px) 65px, 150px"
               style={{ transform: `rotate(${prop.rot}deg)` }} />
           ) : (
@@ -357,6 +358,7 @@ export default function StoryStage() {
               }}
             >
               <Image src={chapter.image} alt="" fill preload={i === 0}
+                loading={i === 0 ? undefined : 'eager'} fetchPriority={i === 0 ? undefined : 'low'}
                 sizes="100vw" className={styles.landscape} data-landscape />
               <div className={styles.landscapeVeil} />
             </div>

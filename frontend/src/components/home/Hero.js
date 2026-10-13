@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, useState, useEffect } from 'react';
 import Image from '@/components/layout/SiteImage';
-import Link from 'next/link';
+import Link from '@/components/layout/SiteLink';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { IoWaterOutline } from 'react-icons/io5';
 import { HiArrowRight } from 'react-icons/hi';
