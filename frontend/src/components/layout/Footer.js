@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaFacebookF, FaInstagram } from 'react-icons/fa';
 import navigateHomeAnchor from '@/lib/navigateHomeAnchor';
 import styles from './Footer.module.css';
+import { hasServerAPI, apiPath } from '@/lib/deployment';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,7 +71,7 @@ export default function Footer() {
 
     setNewsletterStatus('loading');
     try {
-      const res = await fetch('/api/newsletter', {
+      const res = await fetch(apiPath('newsletter'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -111,7 +112,7 @@ export default function Footer() {
             </h2>
           </div>
 
-          <form className={styles.form} onSubmit={handleNewsletter} id="newsletter-form" data-fade>
+          {hasServerAPI ? <form className={styles.form} onSubmit={handleNewsletter} id="newsletter-form" data-fade>
             <label className={styles.field} htmlFor="newsletter-email">
               <span className={styles.srOnly}>Email for newsletter</span>
               <input
@@ -142,7 +143,10 @@ export default function Footer() {
             >
               {statusMessage}
             </p>
-          </form>
+          </form> : <div className={styles.form} data-fade>
+            <a className={styles.field} href="mailto:info@skarduspring.com?subject=Skardu%20Spring%20updates">Request updates by email ↗</a>
+            <p className={styles.status}>Online newsletter sign-up is currently unavailable. Contact our team for updates.</p>
+          </div>}
         </div>
 
         {/* Links */}

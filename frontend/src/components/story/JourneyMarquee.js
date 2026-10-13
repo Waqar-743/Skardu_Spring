@@ -1,7 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { JOURNEY } from './storyData';

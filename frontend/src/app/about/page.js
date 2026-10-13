@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { motion } from 'framer-motion';
 import { IoLeafOutline, IoGlobeOutline, IoConstructOutline, IoHeartOutline } from 'react-icons/io5';
 import { SOURCES } from '@/components/story/storyData';

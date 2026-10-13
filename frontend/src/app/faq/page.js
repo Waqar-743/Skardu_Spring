@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { motion } from 'framer-motion';
 import FAQ from '@/components/home/FAQ';
 import styles from './FAQPage.module.css';

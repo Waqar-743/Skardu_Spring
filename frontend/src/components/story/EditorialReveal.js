@@ -1,7 +1,9 @@
 'use client';
 
+import { publicPath } from '@/lib/deployment';
+
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -103,8 +105,8 @@ export default function EditorialReveal() {
           <div><p className={styles.kicker}>The water / Quality documents</p><h3 data-reveal>A clear view<br />of what you drink.</h3></div>
           <div id="certifications">
             <p>Explore the collection and read the available quality documents.</p>
-            <a href="/assets/certs/gb-food-cert.pdf" target="_blank" rel="noopener noreferrer" className={styles.textLink}>GB Food Authority document <span aria-hidden="true">↗</span></a>
-            <a href="/assets/certs/ALSCERT-UK-2025.pdf" target="_blank" rel="noopener noreferrer" className={styles.textLink}>ALS UK laboratory document <span aria-hidden="true">↗</span></a>
+            <a href={publicPath('/assets/certs/gb-food-cert.pdf')} target="_blank" rel="noopener noreferrer" className={styles.textLink}>GB Food Authority document <span aria-hidden="true">↗</span></a>
+            <a href={publicPath('/assets/certs/ALSCERT-UK-2025.pdf')} target="_blank" rel="noopener noreferrer" className={styles.textLink}>ALS UK laboratory document <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <details className={styles.sources}>

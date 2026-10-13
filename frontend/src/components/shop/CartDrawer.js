@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useCallback } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { IoClose, IoTrashOutline, IoCartOutline, IoArrowForward } from 'react-icons/io5';

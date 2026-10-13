@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import { HiArrowRight } from 'react-icons/hi';
 import { IoShieldCheckmarkOutline, IoLeafOutline, IoRibbonOutline } from 'react-icons/io5';

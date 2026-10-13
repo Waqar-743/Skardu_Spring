@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoChatbubbleEllipsesOutline, IoCloseOutline, IoSend, IoWaterOutline, IoSparklesSharp } from 'react-icons/io5';
 import styles from './Assistant.module.css';
+import { hasServerAPI, apiPath } from '@/lib/deployment';
 
 const QUICK_REPLIES = [
   { id: 'pricing', label: 'Check Pricing', query: 'What are the current prices for Skardu Spring water?' },
@@ -58,7 +59,7 @@ export default function Assistant() {
     setIsTyping(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(apiPath('chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -83,7 +84,7 @@ export default function Assistant() {
     }
   };
 
-  if (!isMounted) return null;
+  if (!isMounted || !hasServerAPI) return null;
 
   return (
     <div className={styles.assistantWrapper}>

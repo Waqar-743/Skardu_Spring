@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import { HiArrowRight } from 'react-icons/hi';
 import { IoCartOutline } from 'react-icons/io5';

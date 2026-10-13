@@ -1,6 +1,8 @@
 'use client';
 
-import Image from 'next/image';
+import { publicPath } from '@/lib/deployment';
+
+import Image from '@/components/layout/SiteImage';
 import { motion } from 'framer-motion';
 import { IoLocationOutline, IoSnowOutline, IoWaterOutline, IoDocumentTextOutline } from 'react-icons/io5';
 import { SOURCES } from '@/components/story/storyData';
@@ -135,8 +137,8 @@ export default function SourcePage() {
             contact the team before ordering.
           </p>
           <div className={styles.sourceActions}>
-            <a href="/assets/certs/gb-food-cert.pdf" target="_blank" rel="noopener noreferrer" className={styles.textLink}>GB Food Authority document <span aria-hidden="true">↗</span></a>
-            <a href="/assets/certs/ALSCERT-UK-2025.pdf" target="_blank" rel="noopener noreferrer" className={styles.textLink}>ALS UK laboratory document <span aria-hidden="true">↗</span></a>
+            <a href={publicPath('/assets/certs/gb-food-cert.pdf')} target="_blank" rel="noopener noreferrer" className={styles.textLink}>GB Food Authority document <span aria-hidden="true">↗</span></a>
+            <a href={publicPath('/assets/certs/ALSCERT-UK-2025.pdf')} target="_blank" rel="noopener noreferrer" className={styles.textLink}>ALS UK laboratory document <span aria-hidden="true">↗</span></a>
             <a href="mailto:info@skarduspring.com" className={styles.textLink}>Ask the team <span aria-hidden="true">↗</span></a>
           </div>
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { IoStar, IoCartOutline, IoHeartOutline, IoHeart } from 'react-icons/io5';

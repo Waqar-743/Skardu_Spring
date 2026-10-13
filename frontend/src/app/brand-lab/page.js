@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import concepts from './concepts.json';
 import variations from './variations.json';
 import refinements from './refinements.json';
 import styles from './page.module.css';
+import { publicPath } from '@/lib/deployment';
 
 const allChoices = [...refinements, ...variations, ...concepts];
 const code = (id) => String(id).padStart(2, '0');
@@ -47,7 +48,7 @@ export default function BrandLab() {
       <button type="button" aria-pressed={view === 'refinements'} onClick={() => setView('refinements')}>06A refinements <span>02</span></button>
       <button type="button" aria-pressed={view === 'variations'} onClick={() => setView('variations')}>Nine new variations <span>09</span></button>
       <button type="button" aria-pressed={view === 'originals'} onClick={() => setView('originals')}>Original directions <span>10</span></button>
-      <a href={view === 'refinements' ? '/brand-concepts/logo-06a-refinements.png' : '/brand-concepts/logo-variations-06-07-08.png'} download>Download comparison sheet ↗</a>
+      <a href={publicPath(view === 'refinements' ? '/brand-concepts/logo-06a-refinements.png' : '/brand-concepts/logo-variations-06-07-08.png')} download>Download comparison sheet ↗</a>
     </div>
     <p className={styles.notice} role="status" aria-live="polite">{notice || (selected ? 'Your current choice: direction ' + code(selected) + '.' : 'Select a direction below, or tell me its code in our chat.')}</p>
     <div className={`${styles.grid} ${view === 'variations' ? styles.variations : ''}`}>
@@ -57,7 +58,7 @@ export default function BrandLab() {
         <p>{concept.desc}</p>
         <div className={styles.actions}>
           <button type="button" onClick={() => select(concept.id)} aria-pressed={selected === concept.id}>{selected === concept.id ? 'Clear selection' : 'Choose direction ' + code(concept.id)}<span aria-hidden="true">{selected === concept.id ? '✓' : '↗'}</span></button>
-          <a href={concept.file} download={'skardu-spring-logo-' + code(concept.id).toLowerCase() + '.svg'}>Download SVG</a>
+          <a href={publicPath(concept.file)} download={'skardu-spring-logo-' + code(concept.id).toLowerCase() + '.svg'}>Download SVG</a>
         </div>
       </article>)}
     </div>

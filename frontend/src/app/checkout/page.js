@@ -1,7 +1,9 @@
 'use client';
 
+import { publicPath, hasServerAPI, apiPath } from '@/lib/deployment';
+
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
@@ -100,9 +102,23 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = async () => {
+    if (!hasServerAPI) {
+      const lines = [
+        'Hello, I would like to request an order from Skardu Spring:',
+        ...cart.map(item => `${item.quantity} × ${item.name} — PKR ${item.price * item.quantity}`),
+        `Subtotal: PKR ${cartTotal}; delivery estimate: PKR ${deliveryFee}; total: PKR ${total}`,
+        `Name: ${shipping.fullName}; phone: ${shipping.phone}`,
+        `Address: ${shipping.address}, ${shipping.city} ${shipping.postalCode}`,
+        `Preferred payment: ${PAYMENT_METHODS.find(method => method.id === paymentMethod)?.name}`,
+        shipping.notes ? `Notes: ${shipping.notes}` : '',
+        'Please confirm availability, delivery cost and payment instructions before processing.',
+      ].filter(Boolean);
+      window.open(`https://wa.me/923492899537?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
+      return;
+    }
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/orders', {
+      const res = await fetch(apiPath('orders'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -163,6 +179,7 @@ export default function CheckoutPage() {
           <span className={styles.kicker}>Skardu Spring / Checkout</span>
           <h1>Your order.</h1>
           <p>Review your selection and choose your delivery and payment details.</p>
+          {!hasServerAPI && <p>Complete your request on WhatsApp. Our team will confirm availability, delivery and payment; no order or payment is processed automatically.</p>}
         </header>
         {/* Step Indicator */}
         <div className={styles.stepIndicator} role="list" aria-label="Checkout progress">
@@ -431,7 +448,7 @@ export default function CheckoutPage() {
                         checked={termsAccepted} 
                         onChange={(e) => setTermsAccepted(e.target.checked)} 
                       />
-                      I have read and agree to the <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> and <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                      I have read and agree to the <a href={publicPath('/terms')} target="_blank" rel="noopener noreferrer">Terms of Service</a> and <a href={publicPath('/privacy-policy')} target="_blank" rel="noopener noreferrer">Privacy Policy</a>
                     </label>
                     {errors.terms && <span className={styles.errorMsg}>{errors.terms}</span>}
                   </div>
@@ -515,7 +532,7 @@ export default function CheckoutPage() {
                     }}
                     disabled={isSubmitting || !termsAccepted}
                   >
-                    {isSubmitting ? 'Placing Order...' : 'Place Order'}
+                    {isSubmitting ? 'Placing Order...' : hasServerAPI ? 'Place Order' : 'Review order on WhatsApp'}
                     {!isSubmitting && <IoShieldCheckmarkOutline />}
                   </button>
                 )}

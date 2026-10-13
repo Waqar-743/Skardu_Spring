@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import { IoWaterOutline, IoLeafOutline, IoShieldCheckmarkOutline, IoDiamondOutline } from 'react-icons/io5';
 import styles from './BrandStory.module.css';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef } from 'react';
-import Image from 'next/image';
+import Image from '@/components/layout/SiteImage';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,6 +10,7 @@ import { CHAPTERS as STORY_CHAPTERS } from './storyData';
 import PRODUCTS from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import styles from './StoryStage.module.css';
+import { publicPath } from '@/lib/deployment';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -38,7 +39,7 @@ const STEP = 1.25;
 const CROSSFADE = 0.78;
 const FEATURED = PRODUCTS.find((product) => product.id === 'glacial-reserve-1000');
 
-const BOTTLE_SRC = '/images/bottle-subject.png';
+const BOTTLE_SRC = publicPath('/images/bottle-subject.png');
 const BOTTLE_MASK = `url(${BOTTLE_SRC})`;
 /** Excludes the paper label band so the liquid tint never colours the logo. */
 const LIQUID_MASK = `${BOTTLE_MASK}, linear-gradient(to bottom, #000 0, #000 63.5%, transparent 63.5%, transparent 81%, #000 81%, #000 100%)`;
