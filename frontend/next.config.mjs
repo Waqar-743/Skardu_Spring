@@ -8,7 +8,7 @@ const isPages = process.env.NEXT_PUBLIC_DEPLOY_TARGET === 'github-pages';
 const nextConfig = {
   ...(isPages ? {
     output: 'export',
-    basePath: process.env.NEXT_PUBLIC_BASE_PATH || '/Skardu-Spring',
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH || '/Skardu_Spring',
     trailingSlash: true,
   } : {}),
   // The repo is an npm workspace with a root lockfile; pin the root so Next doesn't guess.

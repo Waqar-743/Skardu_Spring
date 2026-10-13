@@ -1,13 +1,15 @@
 # 🌊 Skardu Spring Ecosystem
 > **Absolute Purity. Born from the Heart of the Karakoram.**
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg?style=for-the-badge)](https://github.com/tatheer583/Skardu-Spring-)
-[![CI Workflow](https://github.com/tatheer583/Skardu-Spring-/actions/workflows/ci.yml/badge.svg)](https://github.com/tatheer583/Skardu-Spring-/actions)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg?style=for-the-badge)](https://github.com/Waqar-743/Skardu_Spring)
+[![CI Workflow](https://github.com/Waqar-743/Skardu_Spring/actions/workflows/ci.yml/badge.svg)](https://github.com/Waqar-743/Skardu_Spring/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftatheer583%2FSkardu-Spring-&root-directory=frontend&env=OPENAI_API_KEY,EMAIL_USER,EMAIL_PASS,ADMIN_EMAIL&project-name=skardu-spring&repository-name=skardu-spring-frontend)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FWaqar-743%2FSkardu_Spring&root-directory=frontend&env=OPENAI_API_KEY,EMAIL_USER,EMAIL_PASS,ADMIN_EMAIL&project-name=skardu-spring&repository-name=skardu-spring-frontend)
+
+Live storefront: [waqar-743.github.io/Skardu_Spring](https://waqar-743.github.io/Skardu_Spring/). See [Pages deployment notes](docs/GITHUB_PAGES.md) for build commands and server feature availability.
 
 **Skardu Spring** is a premium, full-stack e-commerce ecosystem delivering the crystalline purity of the Karakoram. Built with Next.js 15, Express, and OpenAI, featuring a high-performance 'Digital Purity' design philosophy.
 

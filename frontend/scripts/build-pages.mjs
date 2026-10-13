@@ -29,7 +29,7 @@ const result = spawnSync(process.execPath, [require.resolve('next/dist/bin/next'
   env: {
     ...process.env,
     NEXT_PUBLIC_DEPLOY_TARGET: 'github-pages',
-    NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH || '/Skardu-Spring',
+    NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH || '/Skardu_Spring',
   },
 });
 if (result.error) throw result.error;

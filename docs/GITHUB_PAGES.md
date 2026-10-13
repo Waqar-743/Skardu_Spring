@@ -1,6 +1,6 @@
 # GitHub Pages deployment
 
-Live storefront: https://waqar-743.github.io/Skardu-Spring/
+Live storefront: https://waqar-743.github.io/Skardu_Spring/
 
 The `Deploy GitHub Pages` workflow builds and publishes the storefront on every push to `main`. In repository Settings → Pages, the source is **GitHub Actions**. The separate CI workflow validates the full server application.
 
@@ -11,7 +11,7 @@ npm ci
 npm run build:pages --workspace frontend
 ```
 
-The publishable files are in `frontend/.pages-build/out`. Serve them under `/Skardu-Spring/`, matching the build-time base path. Direct routes use directory indexes, including all six product pages. Public images and document links include the repository prefix.
+The publishable files are in `frontend/.pages-build/out`. Serve them under `/Skardu_Spring/`, matching the build-time base path. Direct routes use directory indexes, including all six product pages. Public images and document links include the repository prefix. The workflow derives this prefix from the repository name.
 
 The build script copies the application into an ignored staging directory, excluding server route handlers and proxy code. It does not change the server application's source or local configuration. The normal `npm run build --workspace frontend` and `npm run start --workspace frontend` still provide the complete Next.js application and APIs.
 
